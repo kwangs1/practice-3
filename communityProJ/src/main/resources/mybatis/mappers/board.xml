@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.board">
+	<resultMap id="boardResult" type="boardVO">
+		<result property="bno" column="bno" />
+		<result property="title" column="title" />
+		<result property="nickname" column="nickname" />
+		<result property="credate" column="credate" />
+		<result property="content" column="content" />
+		<result property="pin" column="pin" />
+		<result property="b_group" column="b_group" />
+		<result property="hit" column="hit" />
+	</resultMap>
+
+<!-- 게시글 목록 -->
+<select id="getList" resultMap="boardResult">
+	<![CDATA[
+		select * from board
+	]]>
+</select>
+
+<!-- 게시글 작성 -->
+<insert id="register">
+	<![CDATA[
+		insert into board(bno, title , nickname , credate , content , pin , b_group , hit)
+		values((select nvl(max(bno)+1,1) from board), #{title} , #{nickname} , sysdate , #{content} , #{pin} , #{b_group} , #{hit})
+	]]>
+</insert>
+
+<!-- 상세보기 -->
+<select id="detail" parameterType="int" resultMap="boardResult">
+	<![CDATA[
+		select * from board
+		where bno = #{bno}
+	]]>
+</select>
+
+<!-- 조회수 -->
+<update id="UpdateHit">
+	<![CDATA[
+		update board
+		set hit = hit+1
+		where bno = #{bno}		
+	]]>
+</update>
+
+<!-- 삭제 -->
+<delete id="remove">
+	<![CDATA[
+		delete from board
+		where bno = #{bno}
+	]]>
+</delete>
+
+<!-- 수정 -->
+<update id="modify">
+	<![CDATA[
+		update board
+		set title = #{title} , content = #{content}
+		where bno = #{bno}
+	]]>
+</update>
+
+</mapper>
