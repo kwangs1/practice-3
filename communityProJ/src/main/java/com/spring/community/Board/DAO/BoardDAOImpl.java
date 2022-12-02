@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.community.Board.VO.BoardVO;
+import com.spring.community.common.Criteria;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO{
@@ -15,8 +16,28 @@ public class BoardDAOImpl implements BoardDAO{
 	
 	//게시판 목록
 	@Override
-	public List<BoardVO> getList() {
-		return session.selectList("mapper.board.getList");
+	public List<BoardVO> getList(Criteria cri) {
+		return session.selectList("mapper.board.getList",cri);
+	}
+	//게시판 목록(일반)
+	@Override
+	public List<BoardVO> NomalList(Criteria cri) {
+		return session.selectList("mapper.board.NomalList",cri);
+	}
+	//게시판 목록(질문)
+	@Override
+	public List<BoardVO> QnAList(Criteria cri) {
+		return session.selectList("mapper.board.QnAList",cri);
+	}
+	//게시판 목록(공략)
+	@Override
+	public List<BoardVO> AttackgetList(Criteria cri) {
+		return session.selectList("mapper.board.AttackgetList",cri);
+	}
+	//게시판 목록(자랑)
+	@Override
+	public List<BoardVO> BoastList(Criteria cri) {
+		return session.selectList("mapper.board.BoastList",cri);
 	}
 	//게시글 작성
 	@Override
@@ -42,5 +63,10 @@ public class BoardDAOImpl implements BoardDAO{
 	@Override
 	public int modify(BoardVO board) {
 		return session.update("mapper.board.modify",board); 
+	}
+	//총게시글 갯수
+	@Override
+	public int countList() {
+		return (Integer)session.selectOne("mapper.board.countList");
 	}
 }

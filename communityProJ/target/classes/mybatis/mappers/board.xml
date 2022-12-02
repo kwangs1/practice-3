@@ -18,7 +18,66 @@
 <!-- 게시글 목록 -->
 <select id="getList" resultMap="boardResult">
 	<![CDATA[
-		select * from board
+		select bno, title, nickname, credate, pin, b_group, hit from
+		(
+			select bno, title, nickname, credate, pin, b_group, hit,
+				row_number() over(order by bno desc) as rnum
+			from board)board
+		where rnum between #{rowStart} and #{rowEnd}
+		order by bno desc
+	]]>
+</select>
+<!-- 게시글 목록(일반)-->
+<select id="NomalList" resultMap="boardResult">
+	<![CDATA[
+		select bno, title, nickname, credate, pin, b_group, hit from
+		(
+			select bno, title, nickname, credate, pin, b_group, hit,
+				row_number() over(order by bno desc) as rnum
+			from board 
+				where b_group = 1)nomal
+		where rnum between #{rowStart} and #{rowEnd}
+		order by bno desc
+	]]>
+
+</select>
+<!-- 게시글 목록(질문) -->
+<select id="QnAList" resultMap="boardResult">
+	<![CDATA[
+		select bno, title, nickname, credate, pin, b_group, hit from
+		(
+			select bno, title, nickname, credate, pin, b_group, hit,
+				row_number() over(order by bno desc) as rnum
+			from board 
+				where b_group = 2)qna
+		where rnum between #{rowStart} and #{rowEnd}
+		order by bno desc
+	]]>
+</select>
+<!-- 게시글 목록(공략) -->
+<select id="AttackgetList" resultMap="boardResult">
+	<![CDATA[
+		select bno, title, nickname, credate, pin, b_group, hit from
+		(
+			select bno, title, nickname, credate, pin, b_group, hit,
+				row_number() over(order by bno desc) as rnum
+			from board
+				where b_group = 3)attack
+		where rnum between #{rowStart} and #{rowEnd}
+		order by bno desc
+	]]>
+</select>
+<!-- 게시글 목록(자랑) -->
+<select id="BoastList" resultMap="boardResult">
+	<![CDATA[
+		select bno, title, nickname, credate, pin, b_group, hit from
+		(
+			select bno, title, nickname, credate, pin, b_group, hit,
+				row_number() over(order by bno desc) as rnum
+			from board 
+				where b_group = 4)boast
+		where rnum between #{rowStart} and #{rowEnd}
+		order by bno desc
 	]]>
 </select>
 
@@ -59,9 +118,16 @@
 <update id="modify">
 	<![CDATA[
 		update board
-		set title = #{title} , content = #{content}
+		set title = #{title} , content = #{content} , b_group = #{b_group}
 		where bno = #{bno}
 	]]>
 </update>
 
+<!-- 총 게시글 갯수 -->
+<select id="countList" resultType="Integer">
+	<![CDATA[
+		select count(*)
+		from board
+	]]>
+</select>
 </mapper>

@@ -12,6 +12,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.community.Board.Service.BoardService;
 import com.spring.community.Board.VO.BoardVO;
+import com.spring.community.common.Criteria;
+import com.spring.community.common.PageMaker;
 
 @Controller
 @RequestMapping(value="/board/*")
@@ -22,9 +24,25 @@ public class BoardController{
 	
 	//게시판 목록
 	@GetMapping("/list")
-	public void list(Model model) {
+	public void list(Model model,Criteria cri) {
 		log.info("list");
-		model.addAttribute("list",service.getList());
+		//페이징 버튼을 위해 객체 선언
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		//총 게시글 갯수
+		pageMaker.setTotalCount(service.countList());
+		
+		model.addAttribute("pageMaker",pageMaker);
+		//전체
+		model.addAttribute("list",service.getList(cri));
+		//일반
+		model.addAttribute("Nomal",service.NomalList(cri));
+		//질문
+		model.addAttribute("QnA",service.QnAList(cri));
+		//공략
+		model.addAttribute("Attack",service.AttackgetList(cri));
+		//자랑
+		model.addAttribute("Boast",service.BoastList(cri));
 	}
 	
 	//게시판 작성 
