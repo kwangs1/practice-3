@@ -12,7 +12,7 @@ public class BoardVO {
 	private Date credate;
 	private String content;
 	private int pin;
-	private int b_group;
+	private int category;
 	private int hit;
 	
 	public int getBno() {
@@ -51,11 +51,12 @@ public class BoardVO {
 	public void setPin(int pin) {
 		this.pin = pin;
 	}
-	public int getB_group() {
-		return b_group;
+	
+	public int getCategory() {
+		return category;
 	}
-	public void setB_group(int b_group) {
-		this.b_group = b_group;
+	public void setCategory(int category) {
+		this.category = category;
 	}
 	public int getHit() {
 		return hit;

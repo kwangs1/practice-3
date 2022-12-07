@@ -6,16 +6,7 @@ public class Criteria {
 	private int perPageNum;//한 페이지당 보여질 게시글 객수
 	private int rowStart;//게시글 시작행번호
 	private int rowEnd;//게시글 마지막행번호
-	private int b_group;
-	
-	
-	public int getB_group() {
-		return b_group;
-	}
 
-	public void setB_group(int b_group) {
-		this.b_group = b_group;
-	}
 
 	public Criteria() {
 		this.page = 1;

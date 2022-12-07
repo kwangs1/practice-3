@@ -7,15 +7,15 @@ import com.spring.community.common.Criteria;
 
 public interface BoardDAO {
 	//목록
-	List<BoardVO> getList(Criteria cri);
+	List<BoardVO> lists(Criteria cri);
 	//목록(자랑)
-	List<BoardVO> BoastList(Criteria cri);
+	List<BoardVO> brag(Criteria cri);
 	//목록(공략)
-	List<BoardVO> AttackgetList(Criteria cri);
+	List<BoardVO> tip(Criteria cri);
 	//목록(질문)
-	List<BoardVO> QnAList(Criteria cri);
-	//목록(일반)
-	List<BoardVO> NomalList(Criteria cri);
+	List<BoardVO> qna(Criteria cri);
+	//목록(자랑)
+	List<BoardVO> free(Criteria cri);
 	//작성
 	void register(BoardVO board);
 	//상세보기

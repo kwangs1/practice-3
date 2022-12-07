@@ -11,71 +11,71 @@
 		<result property="credate" column="credate" />
 		<result property="content" column="content" />
 		<result property="pin" column="pin" />
-		<result property="b_group" column="b_group" />
+		<result property="category" column="category" />
 		<result property="hit" column="hit" />
 	</resultMap>
 
 <!-- 게시글 목록 -->
-<select id="getList" resultMap="boardResult">
+<select id="lists" resultMap="boardResult">
 	<![CDATA[
-		select bno, title, nickname, credate, pin, b_group, hit from
+		select bno, title, nickname, credate, pin, category, hit from
 		(
-			select bno, title, nickname, credate, pin, b_group, hit,
+			select bno, title, nickname, credate, pin, category, hit,
 				row_number() over(order by bno desc) as rnum
-			from board)board
+			from board )lists
 		where rnum between #{rowStart} and #{rowEnd}
 		order by bno desc
 	]]>
 </select>
-<!-- 게시글 목록(일반)-->
-<select id="NomalList" resultMap="boardResult">
+<!-- 게시글 목록(자유)-->
+<select id="free" resultMap="boardResult">
 	<![CDATA[
-		select bno, title, nickname, credate, pin, b_group, hit from
+		select bno, title, nickname, credate, pin, category, hit from
 		(
-			select bno, title, nickname, credate, pin, b_group, hit,
+			select bno, title, nickname, credate, pin, category, hit,
 				row_number() over(order by bno desc) as rnum
 			from board 
-				where b_group = 1)nomal
+				where category = 1)free
 		where rnum between #{rowStart} and #{rowEnd}
 		order by bno desc
 	]]>
 
 </select>
 <!-- 게시글 목록(질문) -->
-<select id="QnAList" resultMap="boardResult">
+<select id="qna" resultMap="boardResult">
 	<![CDATA[
-		select bno, title, nickname, credate, pin, b_group, hit from
+		select bno, title, nickname, credate, pin, category, hit from
 		(
-			select bno, title, nickname, credate, pin, b_group, hit,
+			select bno, title, nickname, credate, pin, category, hit,
 				row_number() over(order by bno desc) as rnum
 			from board 
-				where b_group = 2)qna
+				where category = 2)qna
 		where rnum between #{rowStart} and #{rowEnd}
 		order by bno desc
 	]]>
 </select>
 <!-- 게시글 목록(공략) -->
-<select id="AttackgetList" resultMap="boardResult">
+<select id="tip" resultMap="boardResult">
 	<![CDATA[
-		select bno, title, nickname, credate, pin, b_group, hit from
+		select bno, title, nickname, credate, pin, category, hit from
 		(
-			select bno, title, nickname, credate, pin, b_group, hit,
+			select bno, title, nickname, credate, pin, category, hit,
 				row_number() over(order by bno desc) as rnum
 			from board
-				where b_group = 3)attack
+				where category = 3)tip
 		where rnum between #{rowStart} and #{rowEnd}
 		order by bno desc
 	]]>
 </select>
 <!-- 게시글 목록(자랑) -->
-<select id="BoastList" resultMap="boardResult">
+<select id="brag" resultMap="boardResult">
 	<![CDATA[
-		select bno, title, nickname, credate, pin, b_group, hit from
+		select bno, title, nickname, credate, pin, category, hit from
 		(
-			select bno, title, nickname, credate, pin, b_group, hit,
+			select bno, title, nickname, credate, pin, category, hit,
 				row_number() over(order by bno desc) as rnum
 			from board 
-				where b_group = 4)boast
+				where category = 4)brag
 		where rnum between #{rowStart} and #{rowEnd}
 		order by bno desc
 	]]>
@@ -84,8 +84,8 @@
 <!-- 게시글 작성 -->
 <insert id="register">
 	<![CDATA[
-		insert into board(bno, title , nickname , credate , content , pin , b_group , hit)
-		values((select nvl(max(bno)+1,1) from board), #{title} , #{nickname} , sysdate , #{content} , #{pin} , #{b_group} , #{hit})
+		insert into board(bno, title , nickname , credate , content , pin , category , hit)
+		values((select nvl(max(bno)+1,1) from board), #{title} , #{nickname} , sysdate , #{content} , #{pin} , #{category} , #{hit})
 	]]>
 </insert>
 
@@ -118,13 +118,13 @@
 <update id="modify">
 	<![CDATA[
 		update board
-		set title = #{title} , content = #{content} , b_group = #{b_group}
+		set title = #{title} , content = #{content} , category = #{category}
 		where bno = #{bno}
 	]]>
 </update>
 
 <!-- 총 게시글 갯수 -->
-<select id="countList" resultType="Integer">
+<select id="countList" resultType="int">
 	<![CDATA[
 		select count(*)
 		from board

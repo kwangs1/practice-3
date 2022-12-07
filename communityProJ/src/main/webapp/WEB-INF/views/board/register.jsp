@@ -45,9 +45,9 @@ h1 {
       <table class="table">
       	<tr>
 			<th width=30% class="text-center">
-				<select class="option" name="b_group" id="b_group">
+				<select class="option" name="category" id="category">
 					<option value="" selected>말머리 선택해주세요</option>
-					<option value="1">일반</option>
+					<option value="1">자유</option>
 					<option value="2">질문</option>
 					<option value="3">공략</option>
 					<option value="4">자랑</option>
@@ -86,14 +86,14 @@ h1 {
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 	function check(){
-		var b_group = $(".option").val();
+		var category = $(".option").val();
 		var title = $(".title").val();
 		var nickname = $(".nickname").val();
 		var content = $(".content").val();
 		
-		if(b_group == 0){
+		if(category == 0){
 			alert("말머리 선택해주세요.");
-			return document.getElementById("b_group").focus();
+			return document.getElementById("category").focus();
 		}else if(title == ""){
 			alert("제목을 적어주세요.");
 			return document.getElementById("title").focus();

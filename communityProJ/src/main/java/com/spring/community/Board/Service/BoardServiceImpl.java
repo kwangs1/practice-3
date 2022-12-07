@@ -18,33 +18,28 @@ public class BoardServiceImpl implements BoardService{
 	
 	//게시판 목록
 	@Override
-	public List<BoardVO> getList(Criteria cri) {
-		log.info("getList......");
-		return dao.getList(cri);
+	public List<BoardVO> lists(Criteria cri) {
+		return dao.lists(cri);
 	}
-	//게시판 목록(일반)
+	//게시판 목록(자유)
 	@Override
-	public List<BoardVO> NomalList(Criteria cri) {
-		log.info("NomalList......");
-		return dao.NomalList(cri);
+	public List<BoardVO> free(Criteria cri) {
+		return dao.free(cri);
 	}
 	//게시판 목록(질문)
 	@Override
-	public List<BoardVO> QnAList(Criteria cri) {
-		log.info("QnAList......");
-		return dao.QnAList(cri);
+	public List<BoardVO> qna(Criteria cri) {
+		return dao.qna(cri);
 	}
 	//게시판 목록(공략)
 	@Override
-	public List<BoardVO> AttackgetList(Criteria cri) {
-		log.info("AttackgetList......");
-		return dao.AttackgetList(cri);
+	public List<BoardVO> tip(Criteria cri) {
+		return dao.tip(cri);
 	}
 	//게시판 목록(자랑)
 	@Override
-	public List<BoardVO> BoastList(Criteria cri) {
-		log.info("BoastList......");
-		return dao.BoastList(cri);
+	public List<BoardVO> brag(Criteria cri) {
+		return dao.brag(cri);
 	}
 	//게시판 작성
 	@Override

@@ -56,7 +56,7 @@ h1 {
         </tr>
         <tr>
           <td colspan="4" class="text-right">
-			<a href="${path}/board/list" class="btn btn-xs btn-success">목록으로</a>
+			<a href="#" class="btn btn-xs btn-success" onclick="back()">목록으로</a>
 			<a href="${path}/board/remove?bno=${detail.bno}" id="del_chk" class="btn btn-xs btn-warning">삭제</a>
 			<a href="${path}/board/modify?bno=${detail.bno}" class="btn btn-xs btn-info">수정</a>
           </td>
@@ -78,6 +78,10 @@ $('#del_chk').on('click',function(){
 		return false;
 	}
 })
+
+function back(){
+	history.back();
+}
 </script>
 </body>
 </html>

@@ -23,28 +23,77 @@ public class BoardController{
 	private BoardService service;
 	
 	//게시판 목록
-	@GetMapping("/list")
+	@GetMapping("/lists")
 	public void list(Model model,Criteria cri) {
-		log.info("list");
-		//페이징 버튼을 위해 객체 선언
+		log.info("All-list");
+		//페이징 버튼을 위해 객체 선언(전체)
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);	
+		//총 게시글 갯수
+		pageMaker.setTotalCount(service.countList());
+	
+		model.addAttribute("pageMaker",pageMaker);
+		//전체
+		model.addAttribute("lists",service.lists(cri));
+
+	}
+	//게시판 목록(자유)
+	@GetMapping("/free")
+	public void free(Model model,Criteria cri) {
+		log.info("free-list");
+		//페이징 버튼을 위해 객체 선언(전체)
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);	
+		//총 게시글 갯수
+		pageMaker.setTotalCount(service.countList());		
+		model.addAttribute("pageMaker",pageMaker);
+		//자유
+		model.addAttribute("free",service.free(cri));
+
+	}
+	//게시판 목록(질문)
+	@GetMapping("/qna")
+	public void qna(Model model,Criteria cri) {
+		log.info("qna-list");
+		//페이징 버튼을 위해 객체 선언(전체)
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);	
+		//총 게시글 갯수
+		pageMaker.setTotalCount(service.countList());
+		model.addAttribute("pageMaker",pageMaker);
+		//자유
+		model.addAttribute("qna",service.qna(cri));
+
+	}
+	//게시판 목록(자랑)
+	@GetMapping("/brag")
+	public void brag(Model model,Criteria cri) {
+		log.info("brag-list");
+		//페이징 버튼을 위해 객체 선언(전체)
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		//총 게시글 갯수
 		pageMaker.setTotalCount(service.countList());
-		
 		model.addAttribute("pageMaker",pageMaker);
-		//전체
-		model.addAttribute("list",service.getList(cri));
-		//일반
-		model.addAttribute("Nomal",service.NomalList(cri));
-		//질문
-		model.addAttribute("QnA",service.QnAList(cri));
-		//공략
-		model.addAttribute("Attack",service.AttackgetList(cri));
-		//자랑
-		model.addAttribute("Boast",service.BoastList(cri));
+		//자유
+		model.addAttribute("brag",service.brag(cri));
+
 	}
-	
+	//게시판 목록(공략)
+	@GetMapping("/tip")
+	public void tip(Model model,Criteria cri) {
+		log.info("tip-list");
+		//페이징 버튼을 위해 객체 선언(전체)
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		//총 게시글 갯수
+		pageMaker.setTotalCount(service.countList());
+		model.addAttribute("pageMaker",pageMaker);
+		//자유
+		model.addAttribute("tip",service.tip(cri));
+
+	}
+
 	//게시판 작성 
 	@GetMapping("/register")
 	public void register() {

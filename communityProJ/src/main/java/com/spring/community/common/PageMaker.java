@@ -92,7 +92,6 @@ public class PageMaker {
         UriComponents uri = UriComponentsBuilder.newInstance()
                 .queryParam("page", page)
                 .queryParam("perPageNum", cri.getPerPageNum())
-                .queryParam("b_group", cri.getB_group())
                 .build();
         return uri.toUriString();
     }

@@ -47,7 +47,7 @@ select::-ms-expand {
       <table class="table">
         <tr>
 			<th width=30% class="text-center">
-				<select class="option" name="b_group" id="b_group">
+				<select class="option" name="category" id="category">
 					<option value="" selected>말머리 선택해주세요</option>
 					<option value="1">일반</option>
 					<option value="2">질문</option>
@@ -105,7 +105,7 @@ $(document).ready(function(){
 //select option 값 가져오기!
 $(document).ready(function(){
 
-	let rating = '${board.b_group}';		
+	let rating = '${board.category}';		
 	//option 객체에 접근을 하면 배열 형태로 프로퍼티를 가지고 있음
 	//jquery의 each메서드 사용해서 option객체가 가지고 있는 모든 요소에 순차적으로 접근하도록 함. 
 	$("option").each(function(i,obj){

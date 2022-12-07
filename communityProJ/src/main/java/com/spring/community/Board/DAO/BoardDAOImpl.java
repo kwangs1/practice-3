@@ -1,6 +1,7 @@
 package com.spring.community.Board.DAO;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,28 +17,28 @@ public class BoardDAOImpl implements BoardDAO{
 	
 	//게시판 목록
 	@Override
-	public List<BoardVO> getList(Criteria cri) {
-		return session.selectList("mapper.board.getList",cri);
+	public List<BoardVO> lists(Criteria cri) {
+		return session.selectList("mapper.board.lists",cri);
 	}
-	//게시판 목록(일반)
+	//게시판 목록(자유)
 	@Override
-	public List<BoardVO> NomalList(Criteria cri) {
-		return session.selectList("mapper.board.NomalList",cri);
+	public List<BoardVO> free(Criteria cri) {
+		return session.selectList("mapper.board.free",cri);
 	}
 	//게시판 목록(질문)
 	@Override
-	public List<BoardVO> QnAList(Criteria cri) {
-		return session.selectList("mapper.board.QnAList",cri);
+	public List<BoardVO> qna(Criteria cri) {
+		return session.selectList("mapper.board.qna",cri);
 	}
 	//게시판 목록(공략)
 	@Override
-	public List<BoardVO> AttackgetList(Criteria cri) {
-		return session.selectList("mapper.board.AttackgetList",cri);
+	public List<BoardVO> tip(Criteria cri) {
+		return session.selectList("mapper.board.tip",cri);
 	}
 	//게시판 목록(자랑)
 	@Override
-	public List<BoardVO> BoastList(Criteria cri) {
-		return session.selectList("mapper.board.BoastList",cri);
+	public List<BoardVO> brag(Criteria cri) {
+		return session.selectList("mapper.board.brag",cri);
 	}
 	//게시글 작성
 	@Override
@@ -67,6 +68,6 @@ public class BoardDAOImpl implements BoardDAO{
 	//총게시글 갯수
 	@Override
 	public int countList() {
-		return (Integer)session.selectOne("mapper.board.countList");
+		return session.selectOne("mapper.board.countList");
 	}
 }
