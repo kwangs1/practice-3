@@ -77,7 +77,7 @@ select::-ms-expand {
         <tr>
           <td colspan="4" class="text-right">
           	<button id="upd_chk" class="btn btn-xs btn-info">수정</button>
-			<a href="${path}/board/list" class="btn btn-xs btn-success">목록으로</a>
+			<a href="${path}/board/lists" class="btn btn-xs btn-success">목록으로</a>
           </td>
         </tr>
       </table>

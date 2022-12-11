@@ -3,6 +3,7 @@ package com.spring.community.Board.Service;
 import java.util.List;
 
 import com.spring.community.Board.VO.BoardVO;
+import com.spring.community.common.BoardAttachVO;
 import com.spring.community.common.Criteria;
 
 public interface BoardService {
@@ -23,10 +24,12 @@ public interface BoardService {
 	//조회수
 	int UpdateHit(int bno);
 	//삭제
-	int remove(int bno);
+	boolean remove(int bno);
 	//수정
-	int modify(BoardVO board);
+	boolean modify(BoardVO board);
 	//총 게시글 갯수
 	int countList();
+	List<BoardAttachVO> getAttachList(int bno);
+	void removeAttach(int bno);
 
 }

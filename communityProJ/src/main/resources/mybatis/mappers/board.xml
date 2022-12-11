@@ -82,10 +82,21 @@
 </select>
 
 <!-- 게시글 작성 -->
-<insert id="register">
+<insert id="insertSelectKey">
+	<selectKey keyProperty="bno" order="BEFORE"
+			resultType="int">
+			select bno_seq.nextval from dual
+		</selectKey>
 	<![CDATA[
 		insert into board(bno, title , nickname , credate , content , pin , category , hit)
-		values((select nvl(max(bno)+1,1) from board), #{title} , #{nickname} , sysdate , #{content} , #{pin} , #{category} , #{hit})
+		values(#{bno}, #{title} , #{nickname} , sysdate , #{content} , #{pin} , #{category} , #{hit})
+	]]>
+</insert>
+
+<insert id="insert">
+	<![CDATA[
+		insert into board(bno, title , nickname , credate , content , pin , category , hit)
+		values(bno_seq.nextval, #{title} , #{nickname} , sysdate , #{content} , #{pin} , #{category} , #{hit})
 	]]>
 </insert>
 

@@ -1,8 +1,11 @@
 package com.spring.community.Board.VO;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
+
+import com.spring.community.common.BoardAttachVO;
 
 @Component
 public class BoardVO {
@@ -14,7 +17,15 @@ public class BoardVO {
 	private int pin;
 	private int category;
 	private int hit;
+	private List<BoardAttachVO> attachList;
 	
+	
+	public List<BoardAttachVO> getAttachList() {
+		return attachList;
+	}
+	public void setAttachList(List<BoardAttachVO> attachList) {
+		this.attachList = attachList;
+	}
 	public int getBno() {
 		return bno;
 	}

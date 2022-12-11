@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.community.Board.VO.BoardVO;
+import com.spring.community.common.BoardAttachVO;
 import com.spring.community.common.Criteria;
 
 @Repository
@@ -42,8 +43,12 @@ public class BoardDAOImpl implements BoardDAO{
 	}
 	//게시글 작성
 	@Override
-	public void register(BoardVO board) {
-		session.insert("mapper.board.register",board);
+	public void insertSelectKey(BoardVO board) {
+		session.insert("mapper.board.insertSelectKey",board);
+	}
+	@Override
+	public void insert(BoardVO board) {
+		session.insert("mapper.board.insert",board);
 	}
 	//목록
 	@Override

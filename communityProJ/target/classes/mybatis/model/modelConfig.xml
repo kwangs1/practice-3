@@ -8,6 +8,7 @@
     </settings>
 <typeAliases>
 		<typeAlias type="com.spring.community.Board.VO.BoardVO" alias="BoardVO" />		
+		<typeAlias type="com.spring.community.common.BoardAttachVO" alias="BoardAttachVO" />		
 		
 </typeAliases>       
 </configuration>

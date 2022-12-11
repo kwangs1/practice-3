@@ -3,6 +3,7 @@ package com.spring.community.Board.DAO;
 import java.util.List;
 
 import com.spring.community.Board.VO.BoardVO;
+import com.spring.community.common.BoardAttachVO;
 import com.spring.community.common.Criteria;
 
 public interface BoardDAO {
@@ -17,7 +18,8 @@ public interface BoardDAO {
 	//목록(자랑)
 	List<BoardVO> free(Criteria cri);
 	//작성
-	void register(BoardVO board);
+	void insertSelectKey(BoardVO board);
+	void insert(BoardVO board);
 	//상세보기
 	BoardVO detail(int bno);
 	//조회수
@@ -28,4 +30,5 @@ public interface BoardDAO {
 	int modify(BoardVO board);
 	//총 게시글 갯수
 	int countList();
+
 }
