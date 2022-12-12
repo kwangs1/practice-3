@@ -8,7 +8,7 @@ public interface BoardAttachDAO {
 
 	List<BoardAttachVO> getAttachList(int bno);
 
-	void deleteAll(int bno);
+	void deleteImg(int bno);
 
 	void board_image(BoardAttachVO vo);
 

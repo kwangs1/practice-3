@@ -77,7 +77,9 @@ public class BoardServiceImpl implements BoardService{
 	//»èÁ¦
 	@Override
 	public boolean remove(int bno) {
-		boardAttach.deleteAll(bno);
+		log.info("remove..."+bno);
+		
+		boardAttach.deleteImg(bno);
 		return dao.remove(bno) == 1;
 	}
 	//¼öÁ¤
@@ -85,15 +87,18 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public boolean modify(BoardVO board) {
 		log.info("modify.."+board);
-		boardAttach.deleteAll(board.getBno());
+		boardAttach.deleteImg(board.getBno());
+		
 		boolean modifyResult = dao.modify(board) == 1;
 		
 		if(modifyResult && board.getAttachList().size() >0) {
+			
 			board.getAttachList().forEach(attach ->{
+				
 				attach.setBno(board.getBno());
 				boardAttach.board_image(attach);
 			});		
-			}
+		}
 		return modifyResult;
 	}
 	//ÃÑ °Ô½Ã±Û °¹¼ö
@@ -114,6 +119,6 @@ public class BoardServiceImpl implements BoardService{
 
 		log.info("remove all attach files");
 
-		boardAttach.deleteAll(bno);
+		boardAttach.deleteImg(bno);
 	}
 }

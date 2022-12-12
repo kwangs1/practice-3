@@ -15,12 +15,12 @@ public class BoardAttachDAOImpl implements BoardAttachDAO{
 	
 	@Override
 	public List<BoardAttachVO> getAttachList(int bno){
-		return session.selectOne("mapper.attach.getAttachList",bno);
+		return session.selectList("mapper.attach.getAttachList",bno);
 	};
 	
 	@Override
-	public void deleteAll(int bno) {
-		session.delete("mapper.attach.delete",bno);
+	public void deleteImg(int bno) {
+		session.delete("mapper.attach.deleteImg",bno);
 	}
 	
 	@Override

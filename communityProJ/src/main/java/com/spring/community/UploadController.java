@@ -38,35 +38,6 @@ import net.coobird.thumbnailator.Thumbnailator;
 public class UploadController {
 	private static Logger log = Logger.getLogger(UploadController.class.getName());
 	
-	@GetMapping("/uploadForm")
-	public void uploadForm() {
-		log.info("upload form");
-	}
-	
-	@PostMapping("/uploadFormAction")
-	public void uploadFormPost(MultipartFile[] uploadFile, Model model) {
-		//폴더 생성 경로
-		String uploadFolder = "C:\\upload";
-		
-		//화면에서 첨부파일을 여러 개 선택할 수 있으므로 배열 타입으로 설정한 후 파일을 업로드
-		for(MultipartFile multipartFile : uploadFile) {
-			
-			File savaFile = new File(uploadFolder , multipartFile.getOriginalFilename());
-			
-			try {
-				//transferTo << 파일의 저장 함수
-				multipartFile.transferTo(savaFile);
-			}catch(Exception e) {
-				log.info(e.getMessage());
-			}//end catch
-		}//end for
-	}
-	
-//	@GetMapping("/uploadAjax")
-//	public void uploadAjax() {
-//		log.info("upload Ajax");
-//	}
-	
 	//년/월/일 폴더 생성
 	private String getFolder() {
 

@@ -50,25 +50,8 @@ h1 {
 
 <input type="hidden" id="category" name="category"> 
 <div class="container" >
-  <ul class="nav">
-  	<li class="nav-item">
-      <a class="nav-link" href="${path}/board/lists">전체</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="${path}/board/free">자유</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="${path}/board/qna">질문</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="${path}/board/tip">공략</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="${path}/board/brag">자랑</a>
-    </li>
-  </ul>
 
-		<div>
+<%@include file="../common/nav.jsp"%>
 			<table class="table">
 				<thead>
 					<tr>

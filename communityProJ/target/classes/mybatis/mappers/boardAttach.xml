@@ -6,22 +6,22 @@
 <mapper namespace="mapper.attach">
 	<resultMap id="AttachResult" type="BoardAttachVO">
 		<result property="uuid" column="uuid" />
-		<result property="uploadpath" column="uploadpath" />
+		<result property="uploadPath" column="uploadPath" />
 		<result property="fileName" column="fileName" />
-		<result property="filetype" column="filetype" />
+		<result property="fileType" column="fileType" />
 		<result property="bno" column="bno" />
 	</resultMap>
 	
 	<insert id="board_image">
 	<![CDATA[
-		insert into board_attach (uuid, uploadpath, filename, filetype, bno)
+		insert into board_attach (uuid, uploadPath, fileName, fileType, bno)
 			values (#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{bno} )
 	]]>
 	</insert>
 
-	<delete id="delete">
+	<delete id="deleteImg">
 	<![CDATA[
-			delete from board_attach where uuid = #{uuid}
+			delete from board_attach where bno = #{bno}
 	]]>
 	</delete>
 
@@ -31,15 +31,9 @@
 	]]>
 	</select>
 
-	<delete id="deleteAll">
-	<![CDATA[
-			delete board_attach where bno = #{bno}
-	]]>
-	</delete>
-
 	<select id="getOldFiles" resultMap="AttachResult">
 	<![CDATA[
-			select * from board_attach where uploadpath = to_char(sysdate -1 ,'yyyy\mm\dd')
+			select * from board_attach where uploadPath = to_char(sysdate -1 ,'yyyy\mm\dd')
 	]]>
 	</select>
 </mapper>

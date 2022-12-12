@@ -134,7 +134,7 @@ public class BoardController{
 	
 	//게시판 상세보기
 	@GetMapping("/detail")
-	public void detail(int bno,BoardVO board,Model model) {
+	public void detail(int bno,BoardVO board,Model model,BoardAttachVO img) {
 		log.info("detail"+bno);
 		//상세보기
 		model.addAttribute("detail",service.detail(bno));

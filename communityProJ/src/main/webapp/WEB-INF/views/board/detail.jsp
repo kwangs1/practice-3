@@ -30,6 +30,9 @@ h1 {
 	text-align:center;
 	font-family: 'Space Grotesk', sans-serif;
 }
+li{
+   list-style:none;
+   }
 </style>
 <body>
 
@@ -55,6 +58,11 @@ h1 {
           </td>
         </tr>
         <tr>
+         <td class="uploadResult">
+           	<ul></ul>
+         </td>
+        </tr>
+        <tr>
           <td colspan="4" class="text-right">
 			<a href="#" class="btn btn-xs btn-success" onclick="back()">목록으로</a>
 			<a href="${path}/board/remove?bno=${detail.bno}" id="del_chk" class="btn btn-xs btn-warning">삭제</a>
@@ -64,8 +72,6 @@ h1 {
       </table>
      </div>
    </div>
-
-
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">	
 $('#del_chk').on('click',function(){
@@ -82,6 +88,46 @@ $('#del_chk').on('click',function(){
 function back(){
 	history.back();
 }
+
+
+$(document).ready(function(){
+  
+  (function(){
+  
+    var bno = '<c:out value="${detail.bno}"/>';
+    
+    $.getJSON("${path}/board/getAttachList", {bno: bno}, function(arr){
+        
+       console.log(arr);     
+       var str = "";
+       
+       $(arr).each(function(i, attach){
+       
+         //image type
+         if(attach.fileType){
+           var fileCallPath =  encodeURIComponent( attach.uploadPath+ "/s_"+attach.uuid +"_"+attach.fileName);
+           
+           str += "<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"' ><div>";
+           str += "<img src='${path}/display?fileName="+fileCallPath+"'>";
+           str += "</div>";
+           str +"</li>";
+         }else{
+             
+           str += "<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"' ><div>";
+           str += "<span> "+ attach.fileName+"</span><br/>";
+           str += "<img src='${path}/resources/img/attach.png'></a>";
+           str += "</div>";
+           str +"</li>";
+         }
+       });
+       
+       $(".uploadResult").html(str);       
+       
+     });//end getjson
+    
+  })();//end function
+  
+});
 </script>
 </body>
 </html>
