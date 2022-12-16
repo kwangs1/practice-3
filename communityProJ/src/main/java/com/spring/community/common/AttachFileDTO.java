@@ -8,6 +8,7 @@ public class AttachFileDTO {
 	private String uploadPath;
 	private String uuid;
 	private boolean image;
+	
 	public String getFileName() {
 		return fileName;
 	}

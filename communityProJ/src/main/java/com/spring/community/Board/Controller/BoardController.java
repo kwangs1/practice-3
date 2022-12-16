@@ -119,7 +119,7 @@ public class BoardController{
 
 		if (board.getAttachList() != null) {
 
-			board.getAttachList().forEach(attach -> log.info("나와주세요~"+attach));
+			board.getAttachList().forEach(attach -> log.info("getAttachList:"+attach));
 
 		}
 
@@ -134,7 +134,7 @@ public class BoardController{
 	
 	//게시판 상세보기
 	@GetMapping("/detail")
-	public void detail(int bno,BoardVO board,Model model,BoardAttachVO img) {
+	public void detail(int bno,Model model,BoardVO boardVO) {
 		log.info("detail"+bno);
 		//상세보기
 		model.addAttribute("detail",service.detail(bno));
@@ -171,25 +171,28 @@ public class BoardController{
 		
 	}
 	
+	//파일 삭제 메서드
+	//BoardAttachVO에 을 List에 담아준다
 	private void deleteFiles(List<BoardAttachVO> attachList) {
-	    
+	    //만약 list안에 값이 없거나 배열의 타입 길이가 0 이면 리턴을 시킨다
 	    if(attachList == null || attachList.size() == 0) {
 	      return;
 	    }
 	    
 	    log.info("delete attach files...................");
 	    log.info("delete attachList"+attachList);
-	    
+	    //람다함수를 사용해서 배열에 담긴 값을 매개변수 attach를 통해 출력
 	    attachList.forEach(attach -> {
 	      try {        
+	    	  //파일의 경로에 있는 이미지 파일의 값을 가져와 file객체에 넣는다
 	        Path file  = Paths.get("C:\\upload\\"+attach.getUploadPath()+"\\" + attach.getUuid()+"_"+ attach.getFileName());
-	        
+	        //deleteIfExists() 를 사용해서 파일이 존재하면 삭제, 존재하지않으면 false를 리턴하게 함
 	        Files.deleteIfExists(file);
-	        
+	        //만약 파일에 입력된 값이 image로 시작한다면
 	        if(Files.probeContentType(file).startsWith("image")) {
-	        
+	        	//thumbNail변수에 그 경로에 있는 파일 값을 넣고
 	          Path thumbNail = Paths.get("C:\\upload\\"+attach.getUploadPath()+"\\s_" + attach.getUuid()+"_"+ attach.getFileName());
-	          
+	          //삭제시킨다
 	          Files.delete(thumbNail);
 	        }
 	
@@ -200,7 +203,7 @@ public class BoardController{
 	  }
 
 	
-
+	//저장된 이미지 파일을 List를 통해 출력시키기 위해
 	@GetMapping(value = "/getAttachList",
 			    produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody

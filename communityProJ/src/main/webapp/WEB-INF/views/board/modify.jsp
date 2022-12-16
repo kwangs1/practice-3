@@ -116,11 +116,11 @@ $(document).ready(function(){
 	
 	
 //select option 값 가져오기!
-	let rating = '${board.category}';		
+	let category = '${board.category}';		
 	//option 객체에 접근을 하면 배열 형태로 프로퍼티를 가지고 있음
 	//jquery의 each메서드 사용해서 option객체가 가지고 있는 모든 요소에 순차적으로 접근하도록 함. 
 	$("option").each(function(i,obj){
-		if(rating === $(obj).val()){
+		if(category === $(obj).val()){
 			$(obj).attr("selected", "selected");
 		}
 	});		
@@ -316,13 +316,6 @@ $(document).ready(function() {
 	  }
 	  
 	});
-</script>
-
-<script type="text/javascript">
-$(document).ready(function() {
-
-
-});
 </script>
 </body>
 </html>

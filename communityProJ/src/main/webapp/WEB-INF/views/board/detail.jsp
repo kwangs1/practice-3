@@ -70,6 +70,7 @@ li{
           </td>
         </tr>
       </table>
+		<%@include file="../common/ReplyList.jsp"%>
      </div>
    </div>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -129,5 +130,6 @@ $(document).ready(function(){
   
 });
 </script>
+
 </body>
 </html>

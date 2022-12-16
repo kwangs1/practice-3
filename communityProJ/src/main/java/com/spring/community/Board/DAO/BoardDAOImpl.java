@@ -50,7 +50,7 @@ public class BoardDAOImpl implements BoardDAO{
 	public void insert(BoardVO board) {
 		session.insert("mapper.board.insert",board);
 	}
-	//목록
+	//상세보기
 	@Override
 	public BoardVO detail(int bno) {
 		return session.selectOne("mapper.board.detail",bno);

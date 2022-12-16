@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.reply">
+	<resultMap id="ReplyResult" type="ReplyVO">
+		<result property="rno" column="rno" />
+		<result property="bno" column="bno" />
+		<result property="nickname" column="nickname" />
+		<result property="r_pw" column="r_pw" />
+		<result property="content" column="content" />
+		<result property="credate" column="credate" />
+		<result property="r_depth" column="r_depth" />
+		<result property="r_group" column="r_group" />
+	</resultMap>
+<!-- 댓글 목록 -->	
+<select id="ReplyList" resultType="ReplyVO">
+	<![CDATA[
+		select * from reply
+		order by rno desc
+	]]>
+</select>
+
+<!-- 댓글 작성 -->
+<insert id="addReply" parameterType="ReplyVO">
+	<![CDATA[
+		insert into reply
+		values((select nvl(max(rno) +1,1) from reply), #{bno}, #{nickname},#{r_pw},
+			#{content},sysdate,#{r_depth},#{r_group} )
+	]]>
+</insert>
+
+<!-- 댓글 수정 -->
+<update id="ModfiyReply" parameterType="ReplyVO">
+	<![CDATA[
+		update reply
+		set content = #{content}
+		where rno = #{rno}
+	]]>
+</update>
+
+<!-- 댓글 삭제 -->
+<delete id="DeleteReply" parameterType="int">
+	<![CDATA[
+		delete from reply
+		where rno = #{rno}
+	]]>
+</delete>
+
+<!-- 글 작성시 r_group 값 변경 -->
+<update id="Group_update" parameterType="ReplyVO">
+	<![CDATA[
+		update reply
+		set r_group = rno 
+		where rno = #{rno}
+	]]>
+</update>
+</mapper>

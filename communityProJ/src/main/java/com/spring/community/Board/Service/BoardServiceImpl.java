@@ -63,7 +63,7 @@ public class BoardServiceImpl implements BoardService{
 			boardAttach.board_image(attach);
 		});
 	}
-	//목록
+	//상세보기
 	@Override
 	public BoardVO detail(int bno) {
 		log.info("detail...." + bno);
