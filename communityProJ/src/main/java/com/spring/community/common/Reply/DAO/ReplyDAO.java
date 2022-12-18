@@ -11,6 +11,7 @@ public interface ReplyDAO {
 	int addReply(ReplyVO reply);
 	//수정
 	int ModifyReply(ReplyVO reply);
+	ReplyVO getModifyReply(int rno);
 	//삭제
 	int DeleteReply(int rno);
 	//글 작성시 댓글 번호와 그룹번호 동일학 업데이트

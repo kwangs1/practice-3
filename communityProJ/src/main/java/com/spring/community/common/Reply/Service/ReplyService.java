@@ -11,7 +11,9 @@ public interface ReplyService {
 	int addReply(ReplyVO reply);
 	//수정
 	int ModifyReply(ReplyVO reply);
+	ReplyVO getModifyReply(int rno);
 	//삭제
 	int DeleteReply(int rno);
+
 
 }

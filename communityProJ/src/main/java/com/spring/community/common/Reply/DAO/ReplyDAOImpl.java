@@ -1,6 +1,7 @@
 package com.spring.community.common.Reply.DAO;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ public class ReplyDAOImpl implements ReplyDAO{
 	@Autowired
 	private SqlSession session;
 	
+	private static Logger log = Logger.getLogger(ReplyDAO.class.getName());
 	//목록
 	@Override
 	public List<ReplyVO> ReplyList(int bno){
@@ -30,7 +32,11 @@ public class ReplyDAOImpl implements ReplyDAO{
 	public int ModifyReply(ReplyVO reply) {
 		return session.update("mapper.reply.ModifyReply",reply);
 	}
-	
+	@Override
+	public ReplyVO getModifyReply(int rno) {
+		log.info("댓글 수정팝업창 dao");
+		return session.selectOne("mapper.reply.getModifyReply",rno);
+	}
 	//삭제
 	@Override
 	public int DeleteReply(int rno) {

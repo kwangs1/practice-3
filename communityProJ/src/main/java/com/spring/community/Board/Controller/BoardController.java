@@ -23,6 +23,7 @@ import com.spring.community.Board.VO.BoardVO;
 import com.spring.community.common.BoardAttachVO;
 import com.spring.community.common.Criteria;
 import com.spring.community.common.PageMaker;
+import com.spring.community.common.Reply.Service.ReplyService;
 
 @Controller
 @RequestMapping(value="/board/*")
@@ -30,6 +31,8 @@ public class BoardController{
 	private static Logger log = Logger.getLogger(BoardController.class.getName());
 	@Autowired
 	private BoardService service;
+	@Autowired
+	private ReplyService replySerivce;
 	
 	
 	//게시판 목록
@@ -134,12 +137,18 @@ public class BoardController{
 	
 	//게시판 상세보기
 	@GetMapping("/detail")
-	public void detail(int bno,Model model,BoardVO boardVO) {
+	public void detail(int bno,Model model) {
 		log.info("detail"+bno);
 		//상세보기
 		model.addAttribute("detail",service.detail(bno));
 		//조회수
 		service.UpdateHit(bno);
+	}
+	//수정 팝업창
+	@GetMapping("/getModifyReply")
+	public void getModifyReply(int rno,Model model) {
+		log.info("댓글 수정 팝업 Controller");
+		model.addAttribute("reply",replySerivce.getModifyReply(rno));
 	}
 	
 	//게시판 삭제

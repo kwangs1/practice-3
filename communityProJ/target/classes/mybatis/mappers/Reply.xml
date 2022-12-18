@@ -18,7 +18,7 @@
 <select id="ReplyList" resultType="ReplyVO">
 	<![CDATA[
 		select * from reply
-		order by rno desc
+		where bno = #{bno}
 	]]>
 </select>
 
@@ -32,13 +32,20 @@
 </insert>
 
 <!-- 댓글 수정 -->
-<update id="ModfiyReply" parameterType="ReplyVO">
+<update id="ModifyReply">
 	<![CDATA[
 		update reply
 		set content = #{content}
 		where rno = #{rno}
 	]]>
 </update>
+
+<select id="getModifyReply" resultType="ReplyVO" parameterType="int">
+	<![CDATA[
+		select * from reply
+		where rno = #{rno}
+	]]>
+</select>
 
 <!-- 댓글 삭제 -->
 <delete id="DeleteReply" parameterType="int">
@@ -53,7 +60,7 @@
 	<![CDATA[
 		update reply
 		set r_group = rno 
-		where rno = #{rno}
+		where rno != r_group
 	]]>
 </update>
 </mapper>

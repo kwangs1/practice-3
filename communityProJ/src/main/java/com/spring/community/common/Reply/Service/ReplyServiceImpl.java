@@ -1,6 +1,7 @@
 package com.spring.community.common.Reply.Service;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,8 @@ import com.spring.community.common.Reply.VO.ReplyVO;
 public class ReplyServiceImpl implements ReplyService{
 	@Autowired
 	private ReplyDAO dao;
-	
+
+	private static Logger log = Logger.getLogger(ReplyService.class.getName());
 	//¸ñ·Ï
 	@Override
 	public List<ReplyVO> ReplyList(int bno){
@@ -38,7 +40,11 @@ public class ReplyServiceImpl implements ReplyService{
 	public int ModifyReply(ReplyVO reply) {
 		return dao.ModifyReply(reply);
 	}
-	
+	@Override
+	public ReplyVO getModifyReply(int rno) {
+		log.info("´ñ±Û ¼öÁ¤ÆË¾÷ Service");
+		return dao.getModifyReply(rno);
+	}
 	//»èÁ¦
 	@Override
 	public int DeleteReply(int rno) {

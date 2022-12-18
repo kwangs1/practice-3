@@ -7,8 +7,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300&display=swap" rel="stylesheet">
+	
+<script src="https://kit.fontawesome.com/aa33559cc0.js" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300&display=swap');
 textarea{
 	width:100%;
 	font-family: 'Space Grotesk', sans-serif;
@@ -28,14 +38,43 @@ button{
     width: 100px;
   	height: 40px;
 }
+.table2 {
+	border-spacing: 0 15px;
+	border-collapse: separate;
+	width: 100%;
+}
+.table2 tbody tr th,
+.table2 tbody tr td {
+	vertical-align: middle;
+	border: none;
+}
+
+.table2 tbody tr {
+	box-shadow: 0 2px 10px rgba(40, 40, 40);
+	border-radius: 5px;
+}
+.table2 tbody tr td {
+	background: #fff;
+}
+.user-info__img img {
+	margin-right: 15px;
+	height: 55px;
+	width: 55px;
+	border-radius: 45px;
+	border: 3px solid #fff;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.dropdown{
+	float: right;
+}
+a{
+	color : black;
+    font-family: 'Space Grotesk', sans-serif;
+}
 </style>
 <body>
-	<div class="Reply" style="padding-top: 10px">			
-		<h3 class= "ReplyList">댓글</h3>
-		<div id="replyList"></div>				
-	</div>
-	
- 	<form action="${path}/reply/addReply" method="post" name="form">
+		<h3>댓글</h3>	
+	<div>
 		<input type="hidden" name="bno" id="bno">
 		
 		<div>
@@ -44,17 +83,20 @@ button{
 		</div>
 			<textarea name="content" id="content" placeholder="댓글을 입력해 주세요"></textarea>
 			<button id="btnReplyAdd">등 록</button>
-	</form>
-	
+	</div>
+		<div id="replyList"></div>				
+
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
+//댓글 목록
 $(document).ready(function(){
 	ReplyList();
 });
 
 function ReplyList(){
 	var url = "${path}/reply/ReplyList";
-	var paramData = {"bno" : '${boardVO.bno}' };
+	var paramData = {"bno" : ${detail.bno} };
+	
 	
 	$.ajax({
 		type : 'post',
@@ -62,7 +104,6 @@ function ReplyList(){
 		data : paramData,
 		dataType : 'json',
 		success: function(data){
-			console.log("댓글 목록 불러옴.");
 			
 			var htmls = "";
 			
@@ -79,15 +120,77 @@ function ReplyList(){
 				//댓글
 				if(r_depth == 0){
 					htmls += '<div id="rno' + rno + '">';
-					htmls += '<span>'
-					htmls += '<p>' + nickname + '</p>';
-					htmls += '&nbsp;&nbsp;' + credate ; 
-					htmls += '<br>'
+					htmls += '<table class="table2">';
+					htmls += '<tbody>';
+					htmls += '<tr>';
+					htmls += '<td>'
+					htmls += '<div class="user-info__img">';
+					htmls += '<img src=${path}/resources/img/사용자.png>'		
+					htmls += nickname + '</div>'
+					htmls += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; 
 					htmls += content;
-					htmls += '</span>'
-				}//end if
+					htmls += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; 
+					htmls += credate;
+					htmls += " <a href='#' class='Add_Re_Reply' data-bs-toggle='collapse' data-bs-target='#Re_Reply"+ rno +"' aria-expanded='false' aria-controls='Re_Reply'>답 글</a>";
+					htmls += '</td>';
+					//수정 삭제 버튼
+					htmls += '<td>';
+					htmls += '<div class="dropdown">';
+					htmls += '<a href="#" class="px-2" id="triggerId3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+					htmls += '<i class="fa fa-ellipsis-v"></i>';
+					htmls += '</a>';
+					htmls += '<div class="dropdown-menu" aria-labelledby="triggerId3">';
+					htmls += '<a class="dropdown-item ModifyReply" href="#" data-rno='+rno+'><i class="fa fa-pencil mr-1"></i> 수정</a>';
+					htmls += '<a class="dropdown-item text-danger" href="#" onClick="DeleteReply('+rno+')"><i class="fa fa-trash mr-1"></i> 삭제</a>';
+					htmls += '</div>';
+					htmls += '</div>';
+					htmls += '</td>';
+					htmls += '</tr>';
+					htmls += '</table>';
+				}else{//답글
+						htmls += '<div id="rno' + rno + '">';
+						htmls += '<table class="table2">';
+						htmls += '<tbody>';
+						htmls += '<tr>';
+						htmls += '<td>'
+						htmls += '<div class="user-info__img">';
+						htmls += '<img src=${path}/resources/img/사용자.png>'		
+						htmls += nickname + '</div>'
+						htmls += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; 
+						htmls += content;
+						htmls += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; 
+						htmls += credate;
+						htmls += '</td>';
+						//수정 삭제 버튼
+						htmls += '<td>';
+						htmls += '<div class="dropdown">';
+						htmls += '<a href="#" class="px-2" id="triggerId3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+						htmls += '<i class="fa fa-ellipsis-v"></i>';
+						htmls += '</a>';
+						htmls += '<div class="dropdown-menu" aria-labelledby="triggerId3">';
+					 	htmls += '<a class="dropdown-item ModifyReply" href="#"><i class="fa fa-pencil mr-1"></i> 수정</a>';
+						htmls += '<a class="dropdown-item DeleteReply" href="#"><i class="fa fa-trash mr-1"></i> 삭제</a>';
+						htmls += '</div>';
+						htmls += '</div>';
+						htmls += '</td>';
+						htmls += '</tr>';	
+						htmls += '</table>';
+					}
+						//답글 입력란
+						htmls += "<div class='collapse Add_Re_Reply' id='Re_Reply"+ rno +"'>";
+						htmls += "<div>"
+						htmls += "<input type='text' id='nickname"+ rno +"' name='nickname' placeholder='닉네임'>";
+						htmls += "<input type ='password' id='r_pw"+ rno +"' name='r_pw' placeholder='비밀번호'>";
+						htmls += "</div>";
+						htmls += "<textarea name='content' id='content' placeholder='댓글을 입력해 주세요'></textarea>"
+						//동적으로 넣은 html 태그에서 발생하는 이벤트는 동적으로 처리해줘야 함
+						//동적으로 넣은 html 태그에서 발생하는 click 이벤트는 html 태그 안에서 onclick 처리하면 안되고 , jquery에서 클래스명 이나 id값을 받아서 처리하도록 해야함
+						htmls += "<button  class='Add_Re_Reply' rno='" + rno +"' bno= '" + bno +"'>작 성</button>";
+						htmls += "</div>";
 			}//end for
-		}//end success
+			$("#replyList").html(htmls);
+
+			}//end success
 	});//end ajax
 }
 
@@ -115,7 +218,7 @@ $(document).on('click','#btnReplyAdd',function(){
 		"content" : content,
 		"nickname" : nickname,
 		"r_pw" : r_pw,
-		"bno" : '${boardVO.bno}'
+		"bno" : ${detail.bno}
 	});
 	
 	var headers = {"Content-Type":"application/json"
@@ -123,7 +226,6 @@ $(document).on('click','#btnReplyAdd',function(){
 	
 	$.ajax({
 		url : '${path}/reply/addReply', 
-		
 		data : paramData,
 		headers : headers,
 		type : 'post',
@@ -137,6 +239,42 @@ $(document).on('click','#btnReplyAdd',function(){
 		}
 	})//end ajax
 })//end function
+
+//댓글 수정 팝업
+$(document).on('click', '.ModifyReply', function(){  
+	var rno = $(this).attr('data-rno');
+	var bno = ${detail.bno}
+	
+	let popUrl = "${path}/board/getModifyReply?rno=" + rno + "&bno=" + bno ;
+	let popOption = "width = 350px, height= 250px, top=300px, left=-1000px ";
+
+		window.open(popUrl,"리뷰 수정",popOption);
+});
+
+//댓글 삭제
+function DeleteReply(rno){
+	var Delconfirm = confirm('삭제 하시겠습니까?');
+	
+	if(Delconfirm){
+		alert('삭제 되었습니다.');
+	}else{
+		alert('삭제 취소 되었습니다.');
+		return false;
+	}
+	
+	$.ajax({
+		url : '${path}/reply/DeleteReply',
+		type : 'post',
+		data : {"rno" : rno},
+		dataType : 'text',
+		success : function(result){
+			ReplyList();
+		},
+		error : function(error){
+			console.log(error);
+		}
+	});//end ajax
+};
 </script>
 </body>
 </html>

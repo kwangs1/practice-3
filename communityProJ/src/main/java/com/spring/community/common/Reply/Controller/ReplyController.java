@@ -3,6 +3,7 @@ package com.spring.community.common.Reply.Controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,10 +20,12 @@ public class ReplyController {
 	@Autowired
 	private ReplyService service;
 	
+	private static Logger log = Logger.getLogger(ReplyController.class.getName());
 	
 	//¥Ò±€∏Ò∑œ
 	@PostMapping("/ReplyList")
 	public List<ReplyVO> ReplyList(int bno){
+		
 		return service.ReplyList(bno);
 	}
 	
@@ -57,7 +60,7 @@ public class ReplyController {
 		
 		return result;
 	}
-	
+
 	//¥Ò±€ªË¡¶
 	@PostMapping("/DeleteReply")
 	public Map<String,Object> DeleteReply(int rno){

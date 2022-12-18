@@ -4,6 +4,8 @@ import java.sql.Date;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Component
 public class ReplyVO {
 	private int rno;
@@ -11,6 +13,7 @@ public class ReplyVO {
 	private String nickname;
 	private String r_pw;
 	private String content;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date credate;
 	private int r_depth;
 	private int r_group;
