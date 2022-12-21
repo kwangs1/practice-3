@@ -43,19 +43,6 @@ button{
 	border-collapse: separate;
 	width: 100%;
 }
-.table2 tbody tr th,
-.table2 tbody tr td {
-	vertical-align: middle;
-	border: none;
-}
-
-.table2 tbody tr {
-	box-shadow: 0 2px 10px rgba(40, 40, 40);
-	border-radius: 5px;
-}
-.table2 tbody tr td {
-	background: #fff;
-}
 .user-info__img img {
 	margin-right: 15px;
 	height: 55px;
@@ -65,7 +52,9 @@ button{
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 .dropdown{
-	float: right;
+	position : relative;
+	left : 300px;
+	top : -80px;
 }
 a{
 	color : black;
@@ -82,7 +71,7 @@ a{
 			<input type="password" name="r_pw" id="r_pw" placeholder="비밀번호"/>
 		</div>
 			<textarea name="content" id="content" placeholder="댓글을 입력해 주세요"></textarea>
-			<button id="btnReplyAdd">등 록</button>
+			<button type="button" id="btnReplyAdd">등 록</button>
 	</div>
 		<div id="replyList"></div>				
 
@@ -95,7 +84,7 @@ $(document).ready(function(){
 
 function ReplyList(){
 	var url = "${path}/reply/ReplyList";
-	var paramData = {"bno" : ${detail.bno} };
+	var paramData = {"bno" : ${detail.bno}};
 	
 	
 	$.ajax({
@@ -119,11 +108,7 @@ function ReplyList(){
 				
 				//댓글
 				if(r_depth == 0){
-					htmls += '<div id="rno' + rno + '">';
-					htmls += '<table class="table2">';
-					htmls += '<tbody>';
-					htmls += '<tr>';
-					htmls += '<td>'
+ 					htmls += '<div id="rno' + rno + '">';
 					htmls += '<div class="user-info__img">';
 					htmls += '<img src=${path}/resources/img/사용자.png>'		
 					htmls += nickname + '</div>'
@@ -131,66 +116,62 @@ function ReplyList(){
 					htmls += content;
 					htmls += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; 
 					htmls += credate;
-					htmls += " <a href='#' class='Add_Re_Reply' data-bs-toggle='collapse' data-bs-target='#Re_Reply"+ rno +"' aria-expanded='false' aria-controls='Re_Reply'>답 글</a>";
-					htmls += '</td>';
+					//대댓글 버튼
+					htmls += " <a href='#' data-bs-toggle='collapse' data-bs-target='#addRe_Reply"+ rno +"' aria-expanded='false' aria-controls='collapseExample'>답 글</a>"; 
 					//수정 삭제 버튼
-					htmls += '<td>';
 					htmls += '<div class="dropdown">';
 					htmls += '<a href="#" class="px-2" id="triggerId3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
 					htmls += '<i class="fa fa-ellipsis-v"></i>';
 					htmls += '</a>';
 					htmls += '<div class="dropdown-menu" aria-labelledby="triggerId3">';
 					htmls += '<a class="dropdown-item ModifyReply" href="#" data-rno='+rno+'><i class="fa fa-pencil mr-1"></i> 수정</a>';
-					htmls += '<a class="dropdown-item text-danger" href="#" onClick="DeleteReply('+rno+')"><i class="fa fa-trash mr-1"></i> 삭제</a>';
+					htmls += '<a class="dropdown-item text-danger" href="#"  onClick="DeleteReply('+rno+')"><i class="fa fa-trash mr-1"></i> 삭제</a>';
 					htmls += '</div>';
 					htmls += '</div>';
-					htmls += '</td>';
-					htmls += '</tr>';
-					htmls += '</table>';
-				}else{//답글
+				}else{//대댓글
 						htmls += '<div id="rno' + rno + '">';
-						htmls += '<table class="table2">';
-						htmls += '<tbody>';
-						htmls += '<tr>';
-						htmls += '<td>'
 						htmls += '<div class="user-info__img">';
-						htmls += '<img src=${path}/resources/img/사용자.png>'		
+						htmls += '⤷<img src=${path}/resources/img/사용자.png>'		
 						htmls += nickname + '</div>'
 						htmls += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; 
 						htmls += content;
 						htmls += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; 
 						htmls += credate;
-						htmls += '</td>';
 						//수정 삭제 버튼
-						htmls += '<td>';
 						htmls += '<div class="dropdown">';
 						htmls += '<a href="#" class="px-2" id="triggerId3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
 						htmls += '<i class="fa fa-ellipsis-v"></i>';
 						htmls += '</a>';
 						htmls += '<div class="dropdown-menu" aria-labelledby="triggerId3">';
-					 	htmls += '<a class="dropdown-item ModifyReply" href="#"><i class="fa fa-pencil mr-1"></i> 수정</a>';
-						htmls += '<a class="dropdown-item DeleteReply" href="#"><i class="fa fa-trash mr-1"></i> 삭제</a>';
+						htmls += '<a class="dropdown-item ModifyReply" href="#" data-rno='+rno+'><i class="fa fa-pencil mr-1"></i> 수정</a>';
+					 	htmls += '<a class="dropdown-item text-danger" href="#"  onClick="DeleteReply('+rno+')"><i class="fa fa-trash mr-1"></i> 삭제</a>';
 						htmls += '</div>';
 						htmls += '</div>';
-						htmls += '</td>';
-						htmls += '</tr>';	
-						htmls += '</table>';
+						htmls += '</div>';
 					}
-						//답글 입력란
-						htmls += "<div class='collapse Add_Re_Reply' id='Re_Reply"+ rno +"'>";
+						//대댓글 입력란
+		 				htmls += "<div class='collapse addRe_Reply' id='addRe_Reply"+ rno +"'>";
 						htmls += "<div>"
 						htmls += "<input type='text' id='nickname"+ rno +"' name='nickname' placeholder='닉네임'>";
-						htmls += "<input type ='password' id='r_pw"+ rno +"' name='r_pw' placeholder='비밀번호'>";
+					  	htmls += "<input type ='password' id='r_pw"+ rno +"' name='r_pw' placeholder='비밀번호'>";
 						htmls += "</div>";
-						htmls += "<textarea name='content' id='content' placeholder='댓글을 입력해 주세요'></textarea>"
+						htmls += "<textarea name='content' id='content"+ rno +"' placeholder='댓글을 입력해 주세요'></textarea>"
 						//동적으로 넣은 html 태그에서 발생하는 이벤트는 동적으로 처리해줘야 함
 						//동적으로 넣은 html 태그에서 발생하는 click 이벤트는 html 태그 안에서 onclick 처리하면 안되고 , jquery에서 클래스명 이나 id값을 받아서 처리하도록 해야함
-						htmls += "<button  class='Add_Re_Reply' rno='" + rno +"' bno= '" + bno +"'>작 성</button>";
+						htmls += "<button type='button' class='addRe_Reply' rno='" + rno +"' bno= '" + bno +"'>작 성</button>";
 						htmls += "</div>";
-			}//end for
-			$("#replyList").html(htmls);
-
+					};//end for
+					
+						$("#replyList").html(htmls);
+					
+						//대댓글 작성 스크립트 실행문
+						$('.addRe_Reply').on('click',function(){				
+							addRe_Reply($(this).attr('bno'), $(this).attr('rno'));
+						});
 			}//end success
+			,error : function(error){
+				console.log(error);
+			}
 	});//end ajax
 }
 
@@ -229,13 +210,12 @@ $(document).on('click','#btnReplyAdd',function(){
 		data : paramData,
 		headers : headers,
 		type : 'post',
-		dataType : 'json',
 		success : function(result){
-			console.log(result);
 			ReplyList();
+			 $('#content').val('');
 		},
 		error : function(error){
-			console.log('에러' + error);
+			console.log(error);
 		}
 	})//end ajax
 })//end function
@@ -255,7 +235,7 @@ $(document).on('click', '.ModifyReply', function(){
 function DeleteReply(rno){
 	var Delconfirm = confirm('삭제 하시겠습니까?');
 	
-	if(Delconfirm){
+ 	if(Delconfirm){
 		alert('삭제 되었습니다.');
 	}else{
 		alert('삭제 취소 되었습니다.');
@@ -266,7 +246,6 @@ function DeleteReply(rno){
 		url : '${path}/reply/DeleteReply',
 		type : 'post',
 		data : {"rno" : rno},
-		dataType : 'text',
 		success : function(result){
 			ReplyList();
 		},
@@ -274,7 +253,57 @@ function DeleteReply(rno){
 			console.log(error);
 		}
 	});//end ajax
+	
 };
+
+//대댓글 작성
+addRe_Reply = function(bno, rno){
+		
+var nickname = $('#nickname' + rno).val();
+var r_pw = $('#r_pw' + rno).val();
+var content = $('#content' + rno).val();
+		
+if(nickname == ""){
+	alert("닉네임을 입력해주세요.");
+	document.getElementById("nickname" + rno).focus();
+	return false;
+}else if(r_pw == ""){
+	alert("비밀번호를 입력해주세요.");
+	document.getElementById("r_pw" + rno).focus();
+	return false;
+}else if(content == ""){
+	alert("내용을 입력해주세요.");
+	document.getElementById("content" + rno).focus();
+	return false;
+}
+
+var paramData = JSON.stringify({
+		"bno" : bno,
+		"rno" : rno,
+		"content" : content,
+		"r_pw" : r_pw,
+		"nickname" : nickname
+	});
+
+var headers = {
+	"Content-Type" : "application/json",
+	"X-HTTP-Method-Override" : "POST"
+	};
+
+	$.ajax({
+		url : "${path}/reply/addReReply"
+		,headers : headers
+		,data : paramData
+		,type : 'POST'
+		,dataType : 'text'
+		,success:function(){
+			ReplyList();
+		},
+		error:function(error){
+			console.log(error);
+		}
+	});//end ajax			
+};//end function
 </script>
 </body>
 </html>

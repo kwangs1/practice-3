@@ -13,7 +13,9 @@ public interface ReplyService {
 	int ModifyReply(ReplyVO reply);
 	ReplyVO getModifyReply(int rno);
 	//삭제
-	int DeleteReply(int rno);
+	int DeleteReply(ReplyVO reply);
+	//대댓글 작성
+	int addRe_Reply(ReplyVO reply);
 
 
 }

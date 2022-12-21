@@ -79,7 +79,15 @@ h1 {
 								<c:when test="${list.category == 4}">자랑</c:when>
 							</c:choose>
 							</td>
-							<td><a href="${path}/board/detail?bno=${list.bno}">${list.title}</a></td>
+							<td><a href='<c:url value='/board/detail?bno=${list.bno}
+										&page=${scri.page}
+	      	 							&perPageNum=${scri.perPageNum}
+	      	 							&searchType=${scri.searchType}
+	      	 							&keyword=${scri.keyword}'/>'>${list.title}</a>
+								<c:if test="${list.reply_count != 0 }">
+									<strong>[<c:out value="${list.reply_count}"/>]</strong>
+								</c:if>
+							</td>
 							<td>${list.nickname}</td>
 							<td>${list.credate}</td>
 							<td>${list.hit }</td>
@@ -96,21 +104,17 @@ h1 {
 				    </c:if>
 				    <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="pageNum">
 				    <li>
-				        <a href='<c:url value="/board/tip${pageMaker.makeQueryPage(pageNum) }"/>'><i class="fa">${pageNum }</i></a>
+				        <a href='<c:url value="/board/tip${pageMaker.makeSearch(pageNum) }"/>'><i class="fa">${pageNum }</i></a>
 				    </li>
 				    </c:forEach>
 				    <c:if test="${pageMaker.next && pageMaker.endPage >0 }">
 				    <li>
-				        <a href='<c:url value="/board/tip${pageMaker.makeQueryPage(pageMaker.endPage+1) }"/>'><i class="fa-solid fa-chevron-right"></i></a>
+				        <a href='<c:url value="/board/tip${pageMaker.makeSearch(pageMaker.endPage+1) }"/>'><i class="fa-solid fa-chevron-right"></i></a>
 				    </li>
 				    </c:if>
 				</ul>
 	</div>
 
 </div>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript">
-
-</script>
 </body>
 </html>

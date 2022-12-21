@@ -39,13 +39,30 @@ public class ReplyDAOImpl implements ReplyDAO{
 	}
 	//삭제
 	@Override
-	public int DeleteReply(int rno) {
-		return session.delete("mapper.reply.DeleteReply",rno);
+	public int DeleteReply(ReplyVO reply) {
+		return session.delete("mapper.reply.DeleteReply",reply);
+	}
+	
+	//삭제시 댓글에 대댓글 카운트
+	@Override
+	public int Count_ReReply(ReplyVO reply) {
+		return session.selectOne("mapper.reply.Count_ReReply",reply);
+	}
+	//대댓글이 달린 댓글 삭제시 완전삭제가 아닌 (삭제된 댓글)이라고 표기
+	@Override
+	public int Reply_Content(ReplyVO reply) {
+		return session.update("mapper.reply.Reply_Content",reply);
 	}
 	
 	//글 작성시 댓글 번호와 그룹번호 동일학 업데이트
 	@Override
 	public int Group_update(ReplyVO reply) {
 		return session.update("mapper.reply.Group_update",reply);
+	}
+	
+	//대댓글 작성
+	@Override
+	public int addRe_Reply(ReplyVO reply) {
+		return session.insert("mapper.reply.addRe_Reply",reply);
 	}
 }

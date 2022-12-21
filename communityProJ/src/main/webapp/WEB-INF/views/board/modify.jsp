@@ -42,6 +42,10 @@ select::-ms-expand {
 <body>
 <form method='post' id='modifyForm'>
 	  <input type='hidden' id='bno' name='bno' value='${board.bno}'>
+	  <input type='hidden' id='page' name='page' value='${scri.page}'>
+	  <input type='hidden' id='perPageNum' name='perPageNum' value='${scri.perPageNum}'>
+	  <input type='hidden' id='searchType' name='searchType' value='${scri.searchType}'>
+	  <input type='hidden' id='keyword' name='keyword' value='${scri.keyword}'>
 	
 	<div class="container">
 		<h1>수정</h1>
@@ -89,7 +93,8 @@ select::-ms-expand {
         <tr>
           <td colspan="4" class="text-right">
           	<button type='submit' id="upd_chk" class="btn btn-xs btn-info">수정</button>
-			<a href="${path}/board/lists" class="btn btn-xs btn-success">목록으로</a>
+			<a href='<c:url value='/board/lists?page=${cri.page}&perPageNum=${cri.perPageNum }&searchType=${scri.searchType}&keyword=${scri.keyword}'/>' 
+				class="btn btn-xs btn-success">목록으로</a>
           </td>
         </tr>
       </table>
@@ -99,45 +104,32 @@ select::-ms-expand {
 </form>		
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">	
-$(document).ready(function(){
-//수정 확인 및 취소 메시지창 띄우기
-	$("#upd_chk").on('click',function(){
-		var updform = $('#modfiyForm');
-		var update = confirm("수정 하시겠습니까?");
-			
-		if(update){
-			alert("수정 되었습니다");
-			updform.attr('action','${path}/board/modify').submit();
-		}else{
-			alert("취소 되었습니다.");
-			return false;
-		}
-	})
-	
-	
-//select option 값 가져오기!
-	let category = '${board.category}';		
-	//option 객체에 접근을 하면 배열 형태로 프로퍼티를 가지고 있음
-	//jquery의 each메서드 사용해서 option객체가 가지고 있는 모든 요소에 순차적으로 접근하도록 함. 
-	$("option").each(function(i,obj){
-		if(category === $(obj).val()){
-			$(obj).attr("selected", "selected");
-		}
-	});		
-});
-
-</script>
-<!-- 이미지 수정 관련 스크립트 -->
-<script>
 $(document).ready(function() {
-	//attachlist에 수정된 이미지 및 삭제된 이미지를 담기 위해
 	  var formObj = $("form");
-
+	  
+	//select option 값 가져오기!
+		let category = '${board.category}';		
+		//option 객체에 접근을 하면 배열 형태로 프로퍼티를 가지고 있음
+		//jquery의 each메서드 사용해서 option객체가 가지고 있는 모든 요소에 순차적으로 접근하도록 함. 
+		$("option").each(function(i,obj){
+			if(category === $(obj).val()){
+				$(obj).attr("selected", "selected");
+			}
+		});		
 	  $('button').on("click", function(e){
-		  
 	    	e.preventDefault();         
-	       console.log("submit clicked");
-	        
+	    	
+			var updform = $('#modfiyForm');
+			var update = confirm("수정 하시겠습니까?");
+			
+			if(update){
+				alert("수정 되었습니다");
+			}else{
+				alert("취소 되었습니다.");
+				return false;
+			}
+	    	console.log("submit clicked");    
+	    	
 	        var str = "";
 	        
 	        $(".uploadResult ul li").each(function(i, obj){
@@ -154,7 +146,6 @@ $(document).ready(function() {
 	        });
 	        formObj.append(str).submit();
       
-  
 	    formObj.submit();
 	  });
 	//----등록된 이미지 불러오기
@@ -167,7 +158,6 @@ $(document).ready(function() {
       console.log(arr);
       
       var str = "";
-
       $(arr).each(function(i, attach){
           
           //image type
@@ -194,7 +184,6 @@ $(document).ready(function() {
             str +"</li>";
           }
        });
-
       
       $(".uploadResult ul").html(str);
       
@@ -242,7 +231,6 @@ $(document).ready(function() {
   }
 //-----사진 불러오기(업로드)
   $("input[type='file']").change(function(e){
-
 	    var formData = new FormData();
 	    
 	    var inputFile = $("input[name='uploadFile']");
@@ -250,7 +238,6 @@ $(document).ready(function() {
 	    var files = inputFile[0].files;
 	    
 	    for(var i = 0; i < files.length; i++){
-
 	      if(!checkExtension(files[i].name, files[i].size) ){
 	        return false;
 	      }
@@ -268,7 +255,6 @@ $(document).ready(function() {
 	        success: function(result){
 	          console.log(result); 
 			  showUploadResult(result); //업로드 결과 처리 함수 
-
 	      }
 	    }); //$.ajax
 	    
@@ -309,7 +295,6 @@ $(document).ready(function() {
 				str += "</div>";
 				str +"</li>";
 			}
-
 	    });
 	    
 	    uploadUL.append(str);

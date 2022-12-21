@@ -19,6 +19,7 @@
 	<![CDATA[
 		select * from reply
 		where bno = #{bno}
+		order by r_group asc, r_depth asc , rno desc
 	]]>
 </select>
 
@@ -48,19 +49,44 @@
 </select>
 
 <!-- 댓글 삭제 -->
-<delete id="DeleteReply" parameterType="int">
+<delete id="DeleteReply" parameterType="ReplyVO">
 	<![CDATA[
 		delete from reply
 		where rno = #{rno}
 	]]>
 </delete>
+<!-- 댓글 삭제 시 대댓그 달려있는경우 -->
+<update id="Reply_Content" parameterType="ReplyVO">
+	<![CDATA[
+		update reply
+		set content = '(삭제된 댓글입니다.)'
+		where rno = #{rno}
+	]]>
+</update>
+<!-- 대댓글 갯수 -->
+<select id="Count_ReReply" parameterType="ReplyVO" resultType="int">
+	<![CDATA[
+		select count(rno)
+		from reply
+		where rno != #{rno} and r_group = #{rno}
+	]]>
+</select>
 
 <!-- 글 작성시 r_group 값 변경 -->
 <update id="Group_update" parameterType="ReplyVO">
 	<![CDATA[
 		update reply
-		set r_group = rno 
-		where rno != r_group
+		set r_group = rno
+		where r_depth = 0
 	]]>
 </update>
+
+<!-- 대댓글 작성 -->
+<insert id="addRe_Reply" parameterType="ReplyVO">
+	<![CDATA[
+		insert into reply
+		values((select nvl(max(rno) +1,1) from reply), #{bno}, #{nickname},#{r_pw},
+			#{content},sysdate,#{r_depth},#{r_group} )
+	]]>
+</insert>
 </mapper>

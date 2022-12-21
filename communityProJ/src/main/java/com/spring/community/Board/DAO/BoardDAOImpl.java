@@ -1,15 +1,13 @@
 package com.spring.community.Board.DAO;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.community.Board.VO.BoardVO;
-import com.spring.community.common.BoardAttachVO;
-import com.spring.community.common.Criteria;
+import com.spring.community.common.SearchCriteria;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO{
@@ -18,28 +16,28 @@ public class BoardDAOImpl implements BoardDAO{
 	
 	//게시판 목록
 	@Override
-	public List<BoardVO> lists(Criteria cri) {
-		return session.selectList("mapper.board.lists",cri);
+	public List<BoardVO> lists(SearchCriteria scri) {
+		return session.selectList("mapper.board.lists",scri);
 	}
 	//게시판 목록(자유)
 	@Override
-	public List<BoardVO> free(Criteria cri) {
-		return session.selectList("mapper.board.free",cri);
+	public List<BoardVO> free(SearchCriteria scri) {
+		return session.selectList("mapper.board.free",scri);
 	}
 	//게시판 목록(질문)
 	@Override
-	public List<BoardVO> qna(Criteria cri) {
-		return session.selectList("mapper.board.qna",cri);
+	public List<BoardVO> qna(SearchCriteria scri) {
+		return session.selectList("mapper.board.qna",scri);
 	}
 	//게시판 목록(공략)
 	@Override
-	public List<BoardVO> tip(Criteria cri) {
-		return session.selectList("mapper.board.tip",cri);
+	public List<BoardVO> tip(SearchCriteria scri) {
+		return session.selectList("mapper.board.tip",scri);
 	}
 	//게시판 목록(자랑)
 	@Override
-	public List<BoardVO> brag(Criteria cri) {
-		return session.selectList("mapper.board.brag",cri);
+	public List<BoardVO> brag(SearchCriteria scri) {
+		return session.selectList("mapper.board.brag",scri);
 	}
 	//게시글 작성
 	@Override
@@ -74,5 +72,10 @@ public class BoardDAOImpl implements BoardDAO{
 	@Override
 	public int countList() {
 		return session.selectOne("mapper.board.countList");
+	}
+	//댓글 갯수
+	@Override
+	public void reply_count(int bno) {
+		 session.update("mapper.board.reply_count",bno);
 	}
 }

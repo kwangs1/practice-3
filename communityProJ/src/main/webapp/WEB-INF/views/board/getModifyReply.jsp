@@ -93,7 +93,7 @@ $('.UpdateBtn').on('click',function(){
 		url : '${path}/reply/ModifyReply',
 		headers : headers,
 		data : paramData,
-		success : function(result){
+		success : function(){
 			opener.parent.location.reload();
 			window.close();
 		},

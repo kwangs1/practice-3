@@ -41,7 +41,12 @@ h1 {
 </style>
 <body>
 <form action="${path}/board/register" method="post" id="frm" role="form">
-
+	  <input type='hidden' id='bno' name='bno' value='${detail.bno}'>
+	  <input type='hidden' id='page' name='page' value='${scri.page}'>
+	  <input type='hidden' id='perPageNum' name='perPageNum' value='${scri.perPageNum}'>
+	  <input type='hidden' id='searchType' name='searchType' value='${scri.searchType}'>
+	  <input type='hidden' id='keyword' name='keyword' value='${scri.keyword}'>
+	  
 <div class="container">
    	<h1>작성 페이지</h1>
      <div class="row row1">
@@ -87,7 +92,8 @@ h1 {
         </tr>
         <tr>
           <td colspan="4" class="text-right">
-			<a href="${path}/board/lists" class="btn btn-xs btn-success">목록으로</a>
+		<a href='<c:url value='/board/lists?page=${scri.page}&perPageNum=${scri.perPageNum }&searchType=${scri.searchType}&keyword=${scri.keyword}'/>' 
+				class="btn btn-xs btn-success">목록으로</a>
 			 <button type="submit" class="btn btn-xs btn-info">등록</button>
           </td>
         </tr>

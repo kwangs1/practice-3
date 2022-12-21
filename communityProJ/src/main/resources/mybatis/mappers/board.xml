@@ -13,72 +13,81 @@
 		<result property="pin" column="pin" />
 		<result property="category" column="category" />
 		<result property="hit" column="hit" />
+		<result property="reply_count" column="reply_count" />
 	</resultMap>
-
+<!-- 검색 조건 동적 쿼리 -->
+<sql id="search">
+	<if test="searchType != null">
+		<if test="searchType == 't'.toString()">and title like '%' ||#{keyword}||'%'</if>
+		<if test="searchType == 'c'.toString()">and content like '%' ||#{keyword}||'%'</if>
+		<if test="searchType == 'n'.toString()">and nickname like '%' ||#{keyword}||'%'</if>
+		<if test="searchType == 'tc'.toString()">and (title like '%' ||#{keyword}||'%') or (content like '%' ||#{keyword}||'%')</if>
+	</if>
+</sql>
 <!-- 게시글 목록 -->
 <select id="lists" resultMap="boardResult">
-	<![CDATA[
-		select bno, title, nickname, credate, pin, category, hit from
+		select bno, title, nickname, credate, pin, category, hit, reply_count from
 		(
-			select bno, title, nickname, credate, pin, category, hit,
+			select bno, title, nickname, credate, pin, category, hit, reply_count,
 				row_number() over(order by bno desc) as rnum
-			from board )lists
+			from board 
+			where 1=1
+			<include refid="search"></include>
+				)lists
 		where rnum between #{rowStart} and #{rowEnd}
 		order by bno desc
-	]]>
 </select>
 <!-- 게시글 목록(자유)-->
 <select id="free" resultMap="boardResult">
-	<![CDATA[
-		select bno, title, nickname, credate, pin, category, hit from
+		select bno, title, nickname, credate, pin, category, hit, reply_count from
 		(
-			select bno, title, nickname, credate, pin, category, hit,
+			select bno, title, nickname, credate, pin, category, hit, reply_count,
 				row_number() over(order by bno desc) as rnum
 			from board 
-				where category = 1)free
+				where category = 1
+				and 1=1
+			<include refid="search"></include>)free
 		where rnum between #{rowStart} and #{rowEnd}
 		order by bno desc
-	]]>
-
 </select>
 <!-- 게시글 목록(질문) -->
 <select id="qna" resultMap="boardResult">
-	<![CDATA[
-		select bno, title, nickname, credate, pin, category, hit from
+		select bno, title, nickname, credate, pin, category, hit, reply_count from
 		(
-			select bno, title, nickname, credate, pin, category, hit,
+			select bno, title, nickname, credate, pin, category, hit, reply_count,
 				row_number() over(order by bno desc) as rnum
 			from board 
-				where category = 2)qna
+				where category = 2
+				and 1=1
+			<include refid="search"></include>)qna
 		where rnum between #{rowStart} and #{rowEnd}
 		order by bno desc
-	]]>
 </select>
 <!-- 게시글 목록(공략) -->
 <select id="tip" resultMap="boardResult">
-	<![CDATA[
-		select bno, title, nickname, credate, pin, category, hit from
+		select bno, title, nickname, credate, pin, category, hit, reply_count from
 		(
-			select bno, title, nickname, credate, pin, category, hit,
+			select bno, title, nickname, credate, pin, category, hit, reply_count,
 				row_number() over(order by bno desc) as rnum
 			from board
-				where category = 3)tip
+				where category = 3
+				and 1=1
+			<include refid="search"></include>)tip
 		where rnum between #{rowStart} and #{rowEnd}
 		order by bno desc
-	]]>
 </select>
 <!-- 게시글 목록(자랑) -->
 <select id="brag" resultMap="boardResult">
-	<![CDATA[
-		select bno, title, nickname, credate, pin, category, hit from
+		select bno, title, nickname, credate, pin, category, hit, reply_count from
 		(
-			select bno, title, nickname, credate, pin, category, hit,
+			select bno, title, nickname, credate, pin, category, hit, reply_count,
 				row_number() over(order by bno desc) as rnum
 			from board 
-				where category = 4)brag
+				where category = 4
+				and 1=1
+			<include refid="search"></include>)brag
 		where rnum between #{rowStart} and #{rowEnd}
 		order by bno desc
-	]]>
 </select>
 
 <!-- 게시글 작성 -->
@@ -141,4 +150,13 @@
 		from board
 	]]>
 </select>
+
+<!-- 댓글 갯수 -->
+<update id="reply_count" parameterType="int">
+	<![CDATA[
+		update board 
+		set reply_count = (select count(rno) from reply where bno = #{bno})
+		where bno = #{bno}
+	]]>
+</update>
 </mapper>

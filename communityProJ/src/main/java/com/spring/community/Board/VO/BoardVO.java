@@ -17,6 +17,7 @@ public class BoardVO {
 	private int pin;
 	private int category;
 	private int hit;
+	private int reply_count;
 	private List<BoardAttachVO> attachList;
 	
 	
@@ -74,6 +75,12 @@ public class BoardVO {
 	}
 	public void setHit(int hit) {
 		this.hit = hit;
+	}
+	public int getReply_count() {
+		return reply_count;
+	}
+	public void setReply_count(int reply_count) {
+		this.reply_count = reply_count;
 	}
 	
 	

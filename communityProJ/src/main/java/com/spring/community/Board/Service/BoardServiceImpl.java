@@ -11,7 +11,7 @@ import com.spring.community.Board.DAO.BoardAttachDAO;
 import com.spring.community.Board.DAO.BoardDAO;
 import com.spring.community.Board.VO.BoardVO;
 import com.spring.community.common.BoardAttachVO;
-import com.spring.community.common.Criteria;
+import com.spring.community.common.SearchCriteria;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -23,28 +23,28 @@ public class BoardServiceImpl implements BoardService{
 	
 	//게시판 목록
 	@Override
-	public List<BoardVO> lists(Criteria cri) {
-		return dao.lists(cri);
+	public List<BoardVO> lists(SearchCriteria scri) {
+		return dao.lists(scri);
 	}
 	//게시판 목록(자유)
 	@Override
-	public List<BoardVO> free(Criteria cri) {
-		return dao.free(cri);
+	public List<BoardVO> free(SearchCriteria scri) {
+		return dao.free(scri);
 	}
 	//게시판 목록(질문)
 	@Override
-	public List<BoardVO> qna(Criteria cri) {
-		return dao.qna(cri);
+	public List<BoardVO> qna(SearchCriteria scri) {
+		return dao.qna(scri);
 	}
 	//게시판 목록(공략)
 	@Override
-	public List<BoardVO> tip(Criteria cri) {
-		return dao.tip(cri);
+	public List<BoardVO> tip(SearchCriteria scri) {
+		return dao.tip(scri);
 	}
 	//게시판 목록(자랑)
 	@Override
-	public List<BoardVO> brag(Criteria cri) {
-		return dao.brag(cri);
+	public List<BoardVO> brag(SearchCriteria scri) {
+		return dao.brag(scri);
 	}
 	//게시판 작성
 	@Transactional
@@ -91,7 +91,11 @@ public class BoardServiceImpl implements BoardService{
 		
 		boolean modifyResult = dao.modify(board) == 1;
 		
-		if(modifyResult && board.getAttachList().size() >0) {
+		if (board.getAttachList() == null || board.getAttachList().size() <= 0) {
+			return modifyResult;
+		}
+		
+		if(modifyResult && board.getAttachList().size() > 0) {
 			
 			board.getAttachList().forEach(attach ->{
 				
@@ -106,7 +110,11 @@ public class BoardServiceImpl implements BoardService{
 	public int countList() {
 		return dao.countList();
 	}
-	
+	//댓글 개수
+	@Override
+	public void reply_count(int bno) {
+		 dao.reply_count(bno);
+	}
 	@Override
 	public List<BoardAttachVO> getAttachList(int bno){
 		log.info("get Attach list by bno" + bno);
@@ -121,4 +129,5 @@ public class BoardServiceImpl implements BoardService{
 
 		boardAttach.deleteImg(bno);
 	}
+
 }

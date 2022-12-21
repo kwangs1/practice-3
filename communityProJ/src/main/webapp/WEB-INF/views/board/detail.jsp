@@ -64,35 +64,47 @@ li{
         </tr>
         <tr>
           <td colspan="4" class="text-right">
-			<a href="#" class="btn btn-xs btn-success" onclick="back()">목록으로</a>
-			<a href="${path}/board/remove?bno=${detail.bno}" id="del_chk" class="btn btn-xs btn-warning">삭제</a>
-			<a href="${path}/board/modify?bno=${detail.bno}" class="btn btn-xs btn-info">수정</a>
+			<a href='<c:url value='/board/lists?page=${scri.page}&perPageNum=${scri.perPageNum }&searchType=${scri.searchType}&keyword=${scri.keyword}'/>' 
+					class="btn btn-xs btn-success">목록으로</a>
+			<a href="${path}/board/modify?bno=${detail.bno}&page=${scri.page}&perPageNum=${scri.perPageNum}&searchType=${scri.searchType}&keyword=${scri.keyword}" 
+			class="btn btn-xs btn-info">수정</a>
+  			&nbsp;<button type="submit" data-oper='remove' class="btn btn-xs btn-warning" style="width:40px;height:23.5px;">삭제</button>
           </td>
         </tr>
       </table>
 		<%@include file="../common/ReplyList.jsp"%>
      </div>
    </div>
+   
+   <form method='get' id='form'>
+	  <input type='hidden' id='bno' name='bno' value='${detail.bno}'>
+	  <input type='hidden' id='page' name='page' value='${scri.page}'>
+	  <input type='hidden' id='perPageNum' name='perPageNum' value='${scri.perPageNum}'>
+	  <input type='hidden' id='searchType' name='searchType' value='${scri.searchType}'>
+	  <input type='hidden' id='keyword' name='keyword' value='${scri.keyword}'>
+	</form>	
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">	
-$('#del_chk').on('click',function(){
-	var delconfirm = confirm('삭제 하시겠습니까?');
-	
-	if(delconfirm){
-		alert('삭제 되었습니다.');
-	}else{
-		alert('삭제 취소되었습니다.');
-		return false;
-	}
-})
-
-function back(){
-	history.back();
-}
-
-
 $(document).ready(function(){
-  
+	var formObj = $('#form');
+	 $('button').on("click", function(e){
+		    
+		    e.preventDefault(); 
+		    
+		    var operation = $(this).data("oper");
+		    var delconfirm = confirm('삭제 하시겠습니까?');
+		    
+		    console.log(operation);
+		    
+		    if(operation === 'remove' && delconfirm){
+		      alert('삭제 되었습니다.');
+		      formObj.attr("action", "${path}/board/remove");		      
+		    }else{
+				alert('삭제 취소되었습니다.');
+				return false;
+			}
+		    formObj.submit();
+	 });    
   (function(){
   
     var bno = '<c:out value="${detail.bno}"/>';

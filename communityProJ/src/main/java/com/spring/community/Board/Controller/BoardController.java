@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +24,7 @@ import com.spring.community.Board.VO.BoardVO;
 import com.spring.community.common.BoardAttachVO;
 import com.spring.community.common.Criteria;
 import com.spring.community.common.PageMaker;
+import com.spring.community.common.SearchCriteria;
 import com.spring.community.common.Reply.Service.ReplyService;
 
 @Controller
@@ -37,73 +39,88 @@ public class BoardController{
 	
 	//게시판 목록
 	@GetMapping("/lists")
-	public void list(Model model,Criteria cri) {
+	public void list(Model model,@ModelAttribute("scri")SearchCriteria scri) {
 		log.info("All-list");
 		//페이징 버튼을 위해 객체 선언(전체)
 		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);	
+		pageMaker.setCri(scri);	
 		//총 게시글 갯수
 		pageMaker.setTotalCount(service.countList());
 	
 		model.addAttribute("pageMaker",pageMaker);
 		//전체
-		model.addAttribute("lists",service.lists(cri));
+		model.addAttribute("lists",service.lists(scri));
+		//댓글 갯수
+		BoardVO board = new BoardVO();
+		service.reply_count(board.getBno());
 
 	}
 	//게시판 목록(자유)
 	@GetMapping("/free")
-	public void free(Model model,Criteria cri) {
+	public void free(Model model,@ModelAttribute("scri")SearchCriteria scri) {
 		log.info("free-list");
 		//페이징 버튼을 위해 객체 선언(전체)
 		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);	
+		pageMaker.setCri(scri);	
 		//총 게시글 갯수
 		pageMaker.setTotalCount(service.countList());		
 		model.addAttribute("pageMaker",pageMaker);
 		//자유
-		model.addAttribute("free",service.free(cri));
+		model.addAttribute("free",service.free(scri));
+		//댓글 갯수
+		BoardVO board = new BoardVO();
+		service.reply_count(board.getBno());
 
 	}
 	//게시판 목록(질문)
 	@GetMapping("/qna")
-	public void qna(Model model,Criteria cri) {
+	public void qna(Model model,@ModelAttribute("scri")SearchCriteria scri) {
 		log.info("qna-list");
 		//페이징 버튼을 위해 객체 선언(전체)
 		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);	
+		pageMaker.setCri(scri);	
 		//총 게시글 갯수
 		pageMaker.setTotalCount(service.countList());
 		model.addAttribute("pageMaker",pageMaker);
-		//자유
-		model.addAttribute("qna",service.qna(cri));
+		//질문
+		model.addAttribute("qna",service.qna(scri));
+		//댓글 갯수
+		BoardVO board = new BoardVO();
+		service.reply_count(board.getBno());
 
 	}
 	//게시판 목록(자랑)
 	@GetMapping("/brag")
-	public void brag(Model model,Criteria cri) {
+	public void brag(Model model,@ModelAttribute("scri")SearchCriteria scri) {
 		log.info("brag-list");
 		//페이징 버튼을 위해 객체 선언(전체)
 		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
+		pageMaker.setCri(scri);
 		//총 게시글 갯수
 		pageMaker.setTotalCount(service.countList());
 		model.addAttribute("pageMaker",pageMaker);
-		//자유
-		model.addAttribute("brag",service.brag(cri));
+		//자랑
+		model.addAttribute("brag",service.brag(scri));
+		//댓글 갯수
+		BoardVO board = new BoardVO();
+		service.reply_count(board.getBno());
 
 	}
 	//게시판 목록(공략)
 	@GetMapping("/tip")
-	public void tip(Model model,Criteria cri) {
+	public void tip(Model model,@ModelAttribute("scri")SearchCriteria scri) {
 		log.info("tip-list");
 		//페이징 버튼을 위해 객체 선언(전체)
 		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
+		pageMaker.setCri(scri);
 		//총 게시글 갯수
 		pageMaker.setTotalCount(service.countList());
 		model.addAttribute("pageMaker",pageMaker);
-		//자유
-		model.addAttribute("tip",service.tip(cri));
+		//공략
+		model.addAttribute("tip",service.tip(scri));
+		//댓글 갯수
+		BoardVO board = new BoardVO();
+		service.reply_count(board.getBno());
 
 	}
 
@@ -137,7 +154,7 @@ public class BoardController{
 	
 	//게시판 상세보기
 	@GetMapping("/detail")
-	public void detail(int bno,Model model) {
+	public void detail(int bno,Model model,@ModelAttribute("scri")SearchCriteria scri) {
 		log.info("detail"+bno);
 		//상세보기
 		model.addAttribute("detail",service.detail(bno));
@@ -153,30 +170,37 @@ public class BoardController{
 	
 	//게시판 삭제
 	@GetMapping("/remove")
-	public String remove(int bno) { 
+	public String remove(int bno,RedirectAttributes rttr,@ModelAttribute("scri")SearchCriteria scri) { 
 		log.info("remove.."+bno);
 		List<BoardAttachVO> attachList = service.getAttachList(bno);
 		
 		if(service.remove(bno)) {
 			deleteFiles(attachList);
 		}
-		
-		
+		rttr.addAttribute("page", scri.getPage());
+		rttr.addAttribute("perPageNum", scri.getPerPageNum());
+		rttr.addAttribute("searchType", scri.getSearchType());
+		rttr.addAttribute("keyword", scri.getKeyword());
 		return "redirect:/board/lists";
 	}
 	
 	//게시판 수정
 	@GetMapping("/modify")
-	public void modify(int bno,Model model) {
+	public void modify(int bno,Model model,@ModelAttribute("scri")SearchCriteria scri) {
 		log.info("get modify");
 		model.addAttribute("board",service.detail(bno));
 	}
 	@PostMapping("/modify")
-	public String modify(BoardVO board) {
+	public String modify(BoardVO board,RedirectAttributes rttr,@ModelAttribute("scri")SearchCriteria scri) {
 		log.info("post modify.."+board);
 		service.modify(board);
 		
-		return "redirect:/board/lists";
+		rttr.addAttribute("bno", board.getBno());
+		rttr.addAttribute("page", scri.getPage());
+		rttr.addAttribute("perPageNum", scri.getPerPageNum());
+		rttr.addAttribute("searchType", scri.getSearchType());
+		rttr.addAttribute("keyword", scri.getKeyword());
+		return "redirect:/board/detail";
 		
 	}
 	

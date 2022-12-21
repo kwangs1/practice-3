@@ -1,5 +1,8 @@
 package com.spring.community.common;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -85,15 +88,39 @@ public class PageMaker {
 	public void setDisplayPageNum(int displayPageNum) {
 		this.displayPageNum = displayPageNum;
 	}
-
+	
+	public String makeQuery(int page) {
+		UriComponents uriComponents =
+		UriComponentsBuilder.newInstance()
+						    .queryParam("page", page)
+							.queryParam("perPageNum", cri.getPerPageNum())
+							.build();
+		   
+		return uriComponents.toUriString();
+	}
     
 	//쿼리문자열을 추가해서 원하는 uri생성할 수 있는 메서드
-    public String makeQueryPage(int page) {
+    public String makeSearch(int page) {
         UriComponents uri = UriComponentsBuilder.newInstance()
                 .queryParam("page", page)
                 .queryParam("perPageNum", cri.getPerPageNum())
+                .queryParam("searchType", ((SearchCriteria)cri).getSearchType())
+                .queryParam("keyword", ((SearchCriteria)cri).getKeyword())
                 .build();
         return uri.toUriString();
     }
+    
+    //검색에 대한
+	@SuppressWarnings("unused")
+	private String encoding(String keyword) {
+		if(keyword == null || keyword.trim().length() == 0) {
+			return "";
+		}
+		try {
+			return URLEncoder.encode(keyword,"UTF-8");
+		}catch(UnsupportedEncodingException e) {
+			return "";
+		}
+	}
 	
 }
