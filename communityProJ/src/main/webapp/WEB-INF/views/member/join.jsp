@@ -281,11 +281,11 @@ a:hover{
 </style>
 </head>
 <body>
-	<form action="${path}/member/join" method="post" class="join" role="form">
+	<form action="${path}/member/join" method="post" class="join">
 	   <div class="header">
             <h1>회원가입</h1>
         </div>
-        
+       
         <div class="textForm">아이디
             <input type="text"  name="id" id="id" class="id_input" placeholder="아이디를 입력해주세요.">
             <span class="id_input_re_1">사용 가능한 아이디입니다.</span>
@@ -400,33 +400,33 @@ $('.id_input').on('propertychange change keyup paste input',function(){
 		data : {id : id},
 		success : function(result){
 			if(result != 'fail'){
-				$('.id_input_re_1').css("display","inline-block");
+				$('.id_input_re_1').css("display","block");
 				$('.id_input_re_2').css("display","none");	
 				$('.id_input_re_3').css("display","none");	
 				$('.id_input_re_4').css("display","none");	
 				idCheck = true;
-			}
-			else if(result == 'success' && idFormCheck(id)){
-				$('.id_input_re_2').css("display","inline-block");
+			}else{
 				$('.id_input_re_1').css("display","none");	
+				$('.id_input_re_2').css("display","block");
 				$('.id_input_re_3').css("display","none");	
 				$('.id_input_re_4').css("display","none");	
 				idCheck = false;
 			}
 			if(idFormCheck(id) == false){
-				$('.id_input_re_3').css("display","inline-block");
 				$('.id_input_re_1').css("display","none");	
 				$('.id_input_re_2').css("display","none");	
+				$('.id_input_re_3').css("display","block");
 				$('.id_input_re_4').css("display","none");	
 				idCheck = true;
 			}
-			if(id.length < 5 || id.length > 20){
-				$('.id_input_re_4').css("display","inline-block");
+			 if(id.length < 4 || id.length > 20){
+				$('.id_input_re_1').css("display","none");	
 				$('.id_input_re_3').css("display","none");	
 				$('.id_input_re_2').css("display","none");	
-				$('.id_input_re_1').css("display","none");	
+				$('.id_input_re_4').css("display","block");
 				idCheck = true;
 			}
+
 		},
 		error : function(error){
 			console.log(error);
@@ -444,30 +444,30 @@ $('.nickname_input').on('propertychange change keyup paste input',function(){
 		data : {nickname : nickname},
 		success : function(result){
 			if(result != 'fail'){
-				$('.nick_input_re_1').css("display","inline-block");
+				$('.nick_input_re_1').css("display","block");
 				$('.nick_input_re_2').css("display","none");	
 				$('.nick_input_re_3').css("display","none");	
 				$('.nick_input_re_4').css("display","none");	
 				nickCheck = true;
-			}else if(result == 'success' && nickFormCheck(nickname)){
-				$('.nick_input_re_2').css("display","inline-block");
+			}else{
 				$('.nick_input_re_1').css("display","none");	
-				$('.nick_input_re_2').css("display","none");	
+				$('.nick_input_re_2').css("display","block");
+				$('.nick_input_re_3').css("display","none");	
 				$('.nick_input_re_4').css("display","none");	
 				nickCheck = false;
 			}
 			if(nickFormCheck(nickname) == false){
-				$('.nick_input_re_3').css("display","inline-block");
 				$('.nick_input_re_1').css("display","none");	
 				$('.nick_input_re_2').css("display","none");	
+				$('.nick_input_re_3').css("display","block");
 				$('.nick_input_re_4').css("display","none");	
 				nickCheck = true;
 			}
 			if(nickname.length < 2 || nickname.length > 10){
-				$('.nick_input_re_4').css("display","inline-block");
 				$('.nick_input_re_1').css("display","none");	
 				$('.nick_input_re_2').css("display","none");	
 				$('.nick_input_re_3').css("display","none");	
+				$('.nick_input_re_4').css("display","block");
 				nickCheck = true;
 			}
 		},
@@ -489,7 +489,7 @@ $('.pw_input').on('propertychange change keyup paste input',function(){
 	}else{
         $('.pw_input_re_1').css('display','none');
         $('.pw_input_re_2').css('display','block');
-        $('.pw_input_re_3').css('display','block');
+        $('.pw_input_re_3').css('display','none');
         pwCheck = false;
 	}
 	
@@ -542,7 +542,6 @@ $('.mail_check_button').click(function(){
 	var email = $('.mail_input').val();
 	//인증번호 입력란
 	var checkBox = $('.mail_check_input');
-	var boxWrap = $('.mail_check_input_box');
 	//정규표현식에 어긋났을경우
 	var warnMsg = $('.mail_input_box_warn');
 	
@@ -561,7 +560,6 @@ $('.mail_check_button').click(function(){
 		type : 'post',
 		url : '${path}/member/MailCheck?email='+email,
 		success : function(data){
-			checkBox.attr("id","mail_check_input_box_true");
 			code = data;
 		}
 	})//end ajax
@@ -588,6 +586,7 @@ $('.mail_check_input').blur(function(){
 <!-- 회원가입 완료 및 빈칸 확인 -->
 
 $('input[type="submit"]').on('click',function(){
+	
 	var id = $('.id_input').val();
 	var pw = $('.pw_input').val();
 	var nickname = $('.nickname_input').val();
@@ -637,8 +636,6 @@ $('input[type="submit"]').on('click',function(){
 		document.getElementById("namujiAddress").focus();
 		return false;	
 	}
-	
-    formObj.append(str).submit();
     
 })
 </script>

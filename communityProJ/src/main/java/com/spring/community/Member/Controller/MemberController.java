@@ -145,4 +145,59 @@ public class MemberController {
 		return "redirect:/board/lists";
 	}
 	
+	//회원탈퇴
+	@GetMapping("/remove")
+	public void remove() {
+		log.info("회원탈퇴 화면 진입");
+		service.removeForm();
+	}
+	@PostMapping("/remove")
+	public String remove(MemberVO member, HttpServletRequest request) {
+		log.info("회원탈퇴 화면 진입P");
+		HttpSession http = request.getSession();
+		http.invalidate();
+		
+		service.remove(member);
+		
+		return "redirect:/board/lists";
+	}
+	
+	//상세보기
+	@GetMapping("/info")
+	public void info() {
+		service.info();
+	}
+	
+	//비번수정
+	@GetMapping("/PwModify")
+	public void PwModify() {
+		service.PwModifyForm();
+	}
+	@PostMapping("/PwModify")
+	public String PwModify(MemberVO member,HttpServletRequest request) {
+		HttpSession http = request.getSession();
+		http.setAttribute("member", member);
+		
+		http.invalidate();
+		
+		service.PwModify(member);
+		
+		return "redirect:/member/login";
+	}
+	
+	//정보수정
+	@GetMapping("/modify")
+	public void modify() {
+		service.modifyForm();
+	}
+	@PostMapping("/modify")
+	public String modify(MemberVO member,HttpServletRequest request) {
+		HttpSession http = request.getSession();
+		http.setAttribute("member", member);
+		
+		
+		service.modify(member);
+		
+		return "redirect:/member/info";
+	}
 }

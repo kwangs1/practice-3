@@ -15,7 +15,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-
+<div>
 <c:if test="${member == null}">
 <a href="${path}/member/join">회원가입</a>
 <a href="${path}/member/login">로그인</a>
@@ -23,8 +23,9 @@
 
 <c:if test="${member != null}">
 <a href="${path}/member/logout">로그아웃</a>
+<a href="${path}/member/info">마이페이지</a>
 </c:if>
-
+</div>
 <div class="search" align="center">
     <select name="searchType">
       <option value="t"<c:out value="${scri.searchType eq 't' ? 'selected' : ''}"/>>제목</option>

@@ -11,5 +11,16 @@ public interface MemberService {
 	int NickCheck(String nickname);
 	//로그인
 	MemberVO login(MemberVO member);
+	//회원 탈퇴
+	void remove(MemberVO member);
+	void removeForm();
+	//상세보기
+	void info();
+	//비번 수정
+	void PwModifyForm();
+	void PwModify(MemberVO member);
+	//정보수정
+	void modifyForm();
+	void modify(MemberVO member);
 
 }

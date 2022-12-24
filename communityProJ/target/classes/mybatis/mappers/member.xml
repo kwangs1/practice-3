@@ -24,6 +24,7 @@
 		values(#{id}, #{pw}, #{nickname}, #{email}, #{tel}, sysdate, #{zipcode}, #{roadAddress}, #{jibunAddress}, #{namujiAddress})
 	]]>
 </insert>
+
 <!-- id중복검사 -->
 <select id="IdCheck" resultType="int">
 	<![CDATA[
@@ -31,6 +32,7 @@
 		where id = #{id}
 	]]>
 </select>
+
 <!-- 닉네임중복검사 -->
 <select id="NickCheck" resultType="int">
 	<![CDATA[
@@ -38,6 +40,7 @@
 		where nickname = #{nickname}
 	]]>
 </select>
+
 <!-- 로그인 -->
 <select id="login" resultType="MemberVO">
 	<![CDATA[
@@ -45,4 +48,57 @@
 		where id = #{id} and pw = #{pw}
 	]]>
 </select>
+
+<!-- 회원탈퇴 -->
+<delete id="remove" parameterType="MemberVO">
+	<![CDATA[
+		delete from member
+		where id = #{id}
+	]]>
+</delete>
+<select id="removeForm" resultType="MemberVO">
+	<![CDATA[
+		select * from member
+		where id = #{id}
+	]]>
+</select>
+
+<!-- 상세보기 -->
+<select id="info" resultType="MemberVO">
+	<![CDATA[
+		select * from member
+		where id = #{id}
+	]]>
+</select>
+
+<!-- 비밀번호 수정 -->
+<select id="PwModifyForm" resultType="MemberVO">
+	<![CDATA[
+		select * from member
+		where id = #{id}
+	]]>
+</select>
+<update id="PwModify">
+	<![CDATA[
+		update member
+		set pw = #{pw}
+		where id = #{id}
+	]]>
+</update>
+
+<!-- 정보 수정 -->
+<select id="modifyForm" resultType="MemberVO">
+	<![CDATA[
+		select * from member
+		where id = #{id}
+	]]>
+</select>
+<update id="modify">
+	<![CDATA[
+		update member
+		set nickname = #{nickname} , tel = #{tel} , zipcode = #{zipcode},
+			roadAddress = #{roadAddress} , jibunAddress = #{jibunAddress} , namujiAddress = #{namujiAddress}
+		where id = #{id}
+	]]>
+</update>
 </mapper>
