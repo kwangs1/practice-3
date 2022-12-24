@@ -22,9 +22,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.spring.community.Board.Service.BoardService;
 import com.spring.community.Board.VO.BoardVO;
 import com.spring.community.common.BoardAttachVO;
-import com.spring.community.common.Criteria;
 import com.spring.community.common.PageMaker;
 import com.spring.community.common.SearchCriteria;
+import com.spring.community.common.Like.Service.LikeService;
+import com.spring.community.common.Like.VO.LikeVO;
 import com.spring.community.common.Reply.Service.ReplyService;
 
 @Controller
@@ -35,6 +36,8 @@ public class BoardController{
 	private BoardService service;
 	@Autowired
 	private ReplyService replySerivce;
+	@Autowired
+	private LikeService likeService;
 	
 	
 	//게시판 목록
@@ -49,11 +52,11 @@ public class BoardController{
 	
 		model.addAttribute("pageMaker",pageMaker);
 		//전체
-		model.addAttribute("lists",service.lists(scri));
+		model.addAttribute("lists",service.lists(scri));		
 		//댓글 갯수
 		BoardVO board = new BoardVO();
 		service.reply_count(board.getBno());
-
+		service.like_count(board.getBno());
 	}
 	//게시판 목록(자유)
 	@GetMapping("/free")
@@ -160,6 +163,15 @@ public class BoardController{
 		model.addAttribute("detail",service.detail(bno));
 		//조회수
 		service.UpdateHit(bno);
+		//좋아요
+		LikeVO like = new LikeVO();
+		like.setBno(bno);
+		like.setLike_type(1);
+		
+		//좋아요 확인
+		model.addAttribute("findLike",likeService.findLike(bno));
+		//좋아요 갯수
+		model.addAttribute("getLike",likeService.getLike(bno,1));
 	}
 	//수정 팝업창
 	@GetMapping("/getModifyReply")

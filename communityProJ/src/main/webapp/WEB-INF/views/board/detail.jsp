@@ -10,6 +10,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300&display=swap" rel="stylesheet">
+
+<script src="https://kit.fontawesome.com/aa33559cc0.js" crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 </head>
 <style type="text/css">
@@ -33,6 +35,9 @@ h1 {
 li{
    list-style:none;
    }
+ a:link {text-decoration: none;}
+ a:visited {text-decoration: none;}
+ a:hover { color: black; text-decoration: none;}
 </style>
 <body>
 
@@ -68,14 +73,21 @@ li{
 					class="btn btn-xs btn-success">목록으로</a>
 			<a href="${path}/board/modify?bno=${detail.bno}&page=${scri.page}&perPageNum=${scri.perPageNum}&searchType=${scri.searchType}&keyword=${scri.keyword}" 
 			class="btn btn-xs btn-info">수정</a>
-  			&nbsp;<button type="submit" data-oper='remove' class="btn btn-xs btn-warning" style="width:40px;height:23.5px;">삭제</button>
+  			&nbsp;<button type="submit" data-oper='remove' class="btn btn-xs btn-warning remove" style="width:40px;height:23.5px;">삭제</button>
           </td>
+        </tr>
+        <tr >
+        	<td class="getLike">
+				<a href="#" class="LikeBtn">
+        			<i class="fa-regular fa-heart"></i>
+				</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>${getLike}</strong>
+        	</td>
         </tr>
       </table>
 		<%@include file="../common/ReplyList.jsp"%>
      </div>
    </div>
-   
+
    <form method='get' id='form'>
 	  <input type='hidden' id='bno' name='bno' value='${detail.bno}'>
 	  <input type='hidden' id='page' name='page' value='${scri.page}'>
@@ -87,7 +99,7 @@ li{
 <script type="text/javascript">	
 $(document).ready(function(){
 	var formObj = $('#form');
-	 $('button').on("click", function(e){
+	 $('.remove').on("click", function(e){
 		    
 		    e.preventDefault(); 
 		    
@@ -142,6 +154,55 @@ $(document).ready(function(){
   
 });
 </script>
+<!-- 좋아요 스크립트 -->
+<script type="text/javascript">
+var LikeVal = ${findLike};
 
+	let bno = ${detail.bno};
+	let like_type = 1;
+	
+	if(LikeVal > 0){
+		console.log("좋아요 눌렀어!.."+LikeVal);
+		
+		$('.LikeBtn').on('click',function(){
+		$('.LikeBtn').html('<i class="fa-solid fa-heart"></i>');
+			$.ajax({
+				type : 'post',
+				url : '${path}/Like/LikeDown',
+				contentType : 'application/json',
+				data : JSON.stringify({
+					'bno' : bno,
+					'like_type' : like_type
+				}),
+				dataType : 'json',
+				success : function(){
+					console.log("좋아요 취소!.."+LikeVal);
+				},
+				error : function(error){
+					console.log(error);
+				}
+			})//end ajax;
+		})//end function
+ 	}else{
+		console.log("좋아요 누를꺼임!.."+LikeVal);
+		$('.LikeBtn').on('click',function(){
+			$.ajax({
+				type : 'post',
+				url : '${path}/Like/LikeUp',
+				contentType : 'application/json',
+				data : JSON.stringify({
+					'bno' : bno,
+					'like_type' : like_type
+				}),
+				success : function(){
+					console.log("좋아요 눌렀어.."+LikeVal);
+				},
+				error : function(error){
+					console.log(error);
+				}
+			})//end ajax
+		})//end function
+	}
+</script>
 </body>
 </html>

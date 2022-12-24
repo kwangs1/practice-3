@@ -28,7 +28,7 @@ input{
 	height:25px;
 	font-family: 'Space Grotesk', sans-serif;
 }
-button{
+#button{
 	padding: 16px 31px ;
 	float:right;
 	color: #fff;
@@ -38,10 +38,15 @@ button{
     width: 100px;
   	height: 40px;
 }
-.table2 {
-	border-spacing: 0 15px;
-	border-collapse: separate;
-	width: 100%;
+button{
+	padding: 16px 31px ;
+	float:right;
+	color: #fff;
+    background-color:#0a0a23;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9em;
+    width: 100px;
+  	height: 40px;
 }
 .user-info__img img {
 	margin-right: 15px;
@@ -71,7 +76,7 @@ a{
 			<input type="password" name="r_pw" id="r_pw" placeholder="비밀번호"/>
 		</div>
 			<textarea name="content" id="content" placeholder="댓글을 입력해 주세요"></textarea>
-			<button type="button" id="btnReplyAdd">등 록</button>
+			<input type="button" class="btnReplyAdd" id="button" value="등 록"/>
 	</div>
 		<div id="replyList"></div>				
 
@@ -176,7 +181,7 @@ function ReplyList(){
 }
 
 //댓글 저장
-$(document).on('click','#btnReplyAdd',function(){
+$(document).on('click','.btnReplyAdd',function(){
 	var content = $('#content').val();
 	var nickname = $('#nickname').val();
 	var r_pw = $('#r_pw').val();

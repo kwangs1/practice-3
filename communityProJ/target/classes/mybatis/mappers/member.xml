@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.member">
+	<resultMap id="MemberResult" type="MemberVO">
+		<result property="id" column="id" />
+		<result property="pw" column="pw" />
+		<result property="nickname" column="nickname" />
+		<result property="email" column="email" />
+		<result property="tel" column="tel" />
+		<result property="credate" column="credate" />
+		<result property="zipcode" column="zipcode" />
+		<result property="roadAddress" column="roadAddress" />
+		<result property="jibunAddress" column="jibunAddress" />
+		<result property="namujiAddress" column="namujiAddress" />
+	</resultMap>
+<!-- 회원가입 -->
+<insert id="join" parameterType="MemberVO">
+	<![CDATA[
+		insert into member
+		values(#{id}, #{pw}, #{nickname}, #{email}, #{tel}, sysdate, #{zipcode}, #{roadAddress}, #{jibunAddress}, #{namujiAddress})
+	]]>
+</insert>
+<!-- id중복검사 -->
+<select id="IdCheck" resultType="int">
+	<![CDATA[
+		select count(*) from member
+		where id = #{id}
+	]]>
+</select>
+<!-- 닉네임중복검사 -->
+<select id="NickCheck" resultType="int">
+	<![CDATA[
+		select count(*) from member
+		where nickname = #{nickname}
+	]]>
+</select>
+<!-- 로그인 -->
+<select id="login" resultType="MemberVO">
+	<![CDATA[
+		select * from member
+		where id = #{id} and pw = #{pw}
+	]]>
+</select>
+</mapper>

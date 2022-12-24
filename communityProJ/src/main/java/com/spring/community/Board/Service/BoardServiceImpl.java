@@ -115,13 +115,20 @@ public class BoardServiceImpl implements BoardService{
 	public void reply_count(int bno) {
 		 dao.reply_count(bno);
 	}
+	//게시물 목록 에 좋아요 갯수 
+	@Override
+	public void like_count(int bno) {
+		log.info("좋아요 갯수 카운트..");
+		dao.like_count(bno);
+	}
+	//이미지 파일 리스트
 	@Override
 	public List<BoardAttachVO> getAttachList(int bno){
 		log.info("get Attach list by bno" + bno);
 		
 		return boardAttach.getAttachList(bno);
 	}
-	
+	//이미지 삭제
 	@Override
 	public void removeAttach(int bno) {
 

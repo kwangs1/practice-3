@@ -86,7 +86,7 @@ h1 {
 							<td>${list.nickname}</td>
 							<td>${list.credate}</td>
 							<td>${list.hit }</td>
-							<td></td>
+							<td>${list.like_count }</td>
 						</tr>
 						</c:forEach>
 					</tbody>

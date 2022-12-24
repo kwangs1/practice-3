@@ -8,8 +8,10 @@
     </settings>
 <typeAliases>
 		<typeAlias type="com.spring.community.Board.VO.BoardVO" alias="BoardVO" />		
+		<typeAlias type="com.spring.community.Member.VO.MemberVO" alias="MemberVO" />		
 		<typeAlias type="com.spring.community.common.BoardAttachVO" alias="BoardAttachVO" />		
 		<typeAlias type="com.spring.community.common.Reply.VO.ReplyVO" alias="ReplyVO" />		
+		<typeAlias type="com.spring.community.common.Like.VO.LikeVO" alias="LikeVO" />		
 		
 </typeAliases>       
 </configuration>

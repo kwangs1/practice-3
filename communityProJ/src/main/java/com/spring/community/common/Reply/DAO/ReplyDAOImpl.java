@@ -65,4 +65,5 @@ public class ReplyDAOImpl implements ReplyDAO{
 	public int addRe_Reply(ReplyVO reply) {
 		return session.insert("mapper.reply.addRe_Reply",reply);
 	}
+
 }

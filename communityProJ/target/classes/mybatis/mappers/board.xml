@@ -14,6 +14,7 @@
 		<result property="category" column="category" />
 		<result property="hit" column="hit" />
 		<result property="reply_count" column="reply_count" />
+		<result property="like_count" column="like_count" />
 	</resultMap>
 <!-- 검색 조건 동적 쿼리 -->
 <sql id="search">
@@ -26,9 +27,9 @@
 </sql>
 <!-- 게시글 목록 -->
 <select id="lists" resultMap="boardResult">
-		select bno, title, nickname, credate, pin, category, hit, reply_count from
+		select bno, title, nickname, credate, pin, category, hit, reply_count ,like_count from
 		(
-			select bno, title, nickname, credate, pin, category, hit, reply_count,
+			select bno, title, nickname, credate, pin, category, hit, reply_count, like_count,
 				row_number() over(order by bno desc) as rnum
 			from board 
 			where 1=1
@@ -39,9 +40,9 @@
 </select>
 <!-- 게시글 목록(자유)-->
 <select id="free" resultMap="boardResult">
-		select bno, title, nickname, credate, pin, category, hit, reply_count from
+		select bno, title, nickname, credate, pin, category, hit, reply_count ,like_count from
 		(
-			select bno, title, nickname, credate, pin, category, hit, reply_count,
+			select bno, title, nickname, credate, pin, category, hit, reply_count, like_count,
 				row_number() over(order by bno desc) as rnum
 			from board 
 				where category = 1
@@ -52,9 +53,9 @@
 </select>
 <!-- 게시글 목록(질문) -->
 <select id="qna" resultMap="boardResult">
-		select bno, title, nickname, credate, pin, category, hit, reply_count from
+		select bno, title, nickname, credate, pin, category, hit, reply_count, like_count from
 		(
-			select bno, title, nickname, credate, pin, category, hit, reply_count,
+			select bno, title, nickname, credate, pin, category, hit, reply_count, like_count,
 				row_number() over(order by bno desc) as rnum
 			from board 
 				where category = 2
@@ -65,9 +66,9 @@
 </select>
 <!-- 게시글 목록(공략) -->
 <select id="tip" resultMap="boardResult">
-		select bno, title, nickname, credate, pin, category, hit, reply_count from
+		select bno, title, nickname, credate, pin, category, hit, reply_count, like_count from
 		(
-			select bno, title, nickname, credate, pin, category, hit, reply_count,
+			select bno, title, nickname, credate, pin, category, hit, reply_count, like_count,
 				row_number() over(order by bno desc) as rnum
 			from board
 				where category = 3
@@ -78,9 +79,9 @@
 </select>
 <!-- 게시글 목록(자랑) -->
 <select id="brag" resultMap="boardResult">
-		select bno, title, nickname, credate, pin, category, hit, reply_count from
+		select bno, title, nickname, credate, pin, category, hit, reply_count, like_count from
 		(
-			select bno, title, nickname, credate, pin, category, hit, reply_count,
+			select bno, title, nickname, credate, pin, category, hit, reply_count, like_count,
 				row_number() over(order by bno desc) as rnum
 			from board 
 				where category = 4
@@ -154,9 +155,18 @@
 <!-- 댓글 갯수 -->
 <update id="reply_count" parameterType="int">
 	<![CDATA[
-		update board 
-		set reply_count = (select count(rno) from reply where bno = #{bno})
-		where bno = #{bno}
+		update board b
+		set b.reply_count = (select count(rno) from reply where bno = #{bno})
+		where b.bno = #{bno}
+	]]>
+</update>
+
+<!-- 좋아요 갯수-->
+<update id="like_count" parameterType="int">
+	<![CDATA[
+		update board b
+		set b.like_count = (select count(lno) from heart where bno = #{bno})
+		where b.bno = #{bno}
 	]]>
 </update>
 </mapper>

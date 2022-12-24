@@ -18,6 +18,7 @@ public class BoardVO {
 	private int category;
 	private int hit;
 	private int reply_count;
+	private int like_count;
 	private List<BoardAttachVO> attachList;
 	
 	
@@ -81,6 +82,12 @@ public class BoardVO {
 	}
 	public void setReply_count(int reply_count) {
 		this.reply_count = reply_count;
+	}
+	public int getLike_count() {
+		return like_count;
+	}
+	public void setLike_count(int like_count) {
+		this.like_count = like_count;
 	}
 	
 	

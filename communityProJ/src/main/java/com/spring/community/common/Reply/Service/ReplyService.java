@@ -16,6 +16,4 @@ public interface ReplyService {
 	int DeleteReply(ReplyVO reply);
 	//¥Î¥Ò±€ ¿€º∫
 	int addRe_Reply(ReplyVO reply);
-
-
 }

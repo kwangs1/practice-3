@@ -1,6 +1,7 @@
 package com.spring.community.Board.DAO;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.spring.community.common.SearchCriteria;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO{
+	private static Logger log = Logger.getLogger(BoardDAO.class.getName());
 	@Autowired
 	private SqlSession session;
 	
@@ -78,4 +80,11 @@ public class BoardDAOImpl implements BoardDAO{
 	public void reply_count(int bno) {
 		 session.update("mapper.board.reply_count",bno);
 	}
+	//게시글 목록 좋아요 갯수 
+	@Override
+	public void like_count(int bno) {
+		log.info("좋아요 갯수 카운트ㅡㅡ....");
+		 session.update("mapper.board.like_count",bno);
+	}
+
 }

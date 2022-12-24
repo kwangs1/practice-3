@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.Like">
+	<resultMap id="LikeResult" type="LikeVO">
+		<result property="lno" column="rno" />
+		<result property="bno" column="bno" />
+		<result property="like_type" column="like_type" />
+	</resultMap>
+<!-- 좋아요 누르기 -->
+<insert id="LikeUp">
+	<![CDATA[
+		insert into heart
+		values((select nvl(max(lno)+1,1)from heart), #{bno}, #{like_type} )
+	]]>
+</insert>
+<!-- 좋아요 취소 -->
+<delete id="LikeDown">
+	<![CDATA[
+		delete from heart
+		where bno = #{bno} and like_type = #{like_type}
+	]]>
+</delete>
+<!-- 좋아요 확인 -->
+<select id="findLike" resultType="int">
+	<![CDATA[
+		select count(*) from heart
+		where bno = #{bno} and like_type = #{like_type}
+	]]>
+</select>
+<!-- 좋아요 갯수 -->
+<select id="getLike" resultType="int">
+	<![CDATA[
+		select count(*) from heart
+		where bno = #{bno} and like_type = #{like_type}
+	]]>
+</select>
+</mapper>

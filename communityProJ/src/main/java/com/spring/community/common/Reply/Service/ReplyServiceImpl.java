@@ -61,8 +61,6 @@ public class ReplyServiceImpl implements ReplyService{
 			}
 		
 		return result;
-		
-//		return  dao.DeleteReply(rno);
 	}
 	
 	//대댓글 작성
@@ -71,5 +69,4 @@ public class ReplyServiceImpl implements ReplyService{
 		log.info("대댓글 작성 진입S");
 		return dao.addRe_Reply(reply);
 	}
-
 }
