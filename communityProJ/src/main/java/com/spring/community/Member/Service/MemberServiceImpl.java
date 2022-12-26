@@ -1,5 +1,7 @@
 package com.spring.community.Member.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +76,44 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public void modify(MemberVO member) {
 		dao.modify(member);
+	}
+	
+	//이메일 수정
+	@Override
+	public void EmailModifyForm() {
+		dao.EmailModifyForm();
+	}
+	@Override
+	public void EmailModify(MemberVO member) {
+		dao.EmailModify(member);
+	}
+	
+	//id 찾기
+	@Override
+	public String idSearch(String nickname, String email) {
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("nickname", nickname);
+		map.put("email", email);
+		
+		log.info("nick.S.."+nickname);
+		log.info("email.S.."+email);
+		
+		return dao.idSearch(map);
+
+	}
+	
+	//pw 찾기
+	@Override
+	public String pwSearch(String id, String email) {
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("id", id);
+		map.put("email", email);
+		
+		log.info("id.S.."+id);
+		log.info("email.S.."+email);
+		
+		return dao.pwSearch(map);
+
 	}
 	
 }

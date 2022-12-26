@@ -46,7 +46,7 @@ font-family: 'Space Grotesk', sans-serif;
 }
 .loginbox{
 width:330px;
-height:320px;
+height:370px;
 border:1px solid #ccc;
 margin:0 auto;
 padding:0 auto;
@@ -64,7 +64,6 @@ box-sizing:border-box;
 .search{
 width:100%;
 height:40px;
-border-bottom:1px dashed #999;
 box-sizing:border-box;
 line-height:40px;
 text-align:center;
@@ -127,7 +126,7 @@ line-height:35px;
 </style>
 </head>
 <body>
-
+<br><br>
 <div class="main">
 <a href="${path}/board/lists">
 <strong><h1>시끌벅적 커뮤니티</h1></strong>
@@ -143,16 +142,17 @@ line-height:35px;
       	<div class="textForm">
             <input type="password"  name="pw" id="pw" class="pw_input" placeholder="비밀번호">
         </div>
-      		
-<%-- 		<div class="search">
-			<span class="text">아이디 또는 비밀번호를 잊으셨나요?</span>
-			<a href="${ }/member/memberSearchForm.do" style='cursor:pointer;'>ID/PW 찾기</a>
-		</div>  --%>
-		
 		<c:if test="${result == 0 }">
 			<div class="login_warn"> ID 또는 비밀번호를 잘못 입력하셨습니다.</div>
 		</c:if>
+      		
+ 		<div class="search">
+			<span class="text">아이디 또는 비밀번호를 잊으셨나요?</span><br>
+			<a href="${path}/member/idSearch" style='cursor:pointer;'>아이디 찾기</a>
+			<a href="${path}/member/pwSearch" style='cursor:pointer;'>비밀번호 찾기</a>
+		</div>
 		
+		<br>
 		<div class="btnwrap">
 			&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="btn" value="로그인" style='cursor:pointer;'/>
 			<a href="${path}/member/join">회원가입</a><br>

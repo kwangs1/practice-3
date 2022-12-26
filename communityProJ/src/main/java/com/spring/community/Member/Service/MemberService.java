@@ -22,5 +22,11 @@ public interface MemberService {
 	//정보수정
 	void modifyForm();
 	void modify(MemberVO member);
-
+	//이메일 수정
+	void EmailModifyForm();
+	void EmailModify(MemberVO member);
+	//id 찾기
+	String idSearch(String nickname, String email);
+	//pw 찾기
+	String pwSearch(String id, String email);
 }

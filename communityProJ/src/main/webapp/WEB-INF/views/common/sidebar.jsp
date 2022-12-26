@@ -30,6 +30,9 @@
       <a class="nav-link" href="${path}/member/PwModify">비밀번호 수정</a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" href="${path}/member/EmailModify">이메일 수정</a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" href="${path}/member/modify">정보 수정</a>
     </li>
   </ul>

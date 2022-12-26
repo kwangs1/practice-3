@@ -109,6 +109,7 @@
 </head>
 <body>
 <%@include file="../common/sidebar.jsp"%>
+<br><br>
 
 <form method="post" id="form">
 <input type="hidden" name="id" value="${member.id}">
@@ -136,7 +137,7 @@
 				<span id="guide" style="color: #999"></span>
 		</div>
 		
-		<button type="submit" class="modify" id="btn" >수 정</button>
+		<button type="button" class="modify" id="btn" >수 정</button>
 </form>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -212,80 +213,19 @@ $('.tel_input').on('propertychange change keyup paste input',function(){
 	}
 })
 
-<!-- 이메일 스크립트 -->
-
-var code ="";
-var mailnumCheck =false; //이메일 인증번호
-
-//메일 보내기 버튼
-$('.mail_check_button').click(function(){
-	var email = $('.mail_input').val();
-	//인증번호 입력란
-	var checkBox = $('.mail_check_input');
-	//정규표현식에 어긋났을경우
-	var warnMsg = $('.mail_input_box_warn');
-	
-	if(mailFormCheck(email)){
-		warnMsg.html("이메일이 전송되었습니다.");
-		warnMsg.css("display",'inline-block');
-		warnMsg.css("color",'green');
-	}else{
-		warnMsg.html("이메일 형식이 올바르지 않습니다.");
-		warnMsg.css("display",'inline-block');
-		warnMsg.css("color",'red');
-		return false;
-	}
-	
-	$.ajax({
-		type : 'post',
-		url : '${path}/member/MailCheck?email='+email,
-		success : function(data){
-			code = data;
-		}
-	})//end ajax
-})
-
-//이메일 인증코드 비교
-$('.mail_check_input').blur(function(){
-	//사용자가 입력한 코드
-	var inputCode = $('.mail_check_input').val();
-	//결과 메시지
-	var checkResult = $('#mail_check_input_box_warn');
-	
-	if(inputCode == code){
-		checkResult.html("인증번호가 일치합니다.");
-		checkResult.attr("class", "correct");
-		mailnumCheck = true;
-	}else{
-		checkResult.html("인증번호를 다시 확인해주세요.");
-		checkResult.attr("class","incorrect");
-		mailnumCheck = false;
-	}
-})
-
 //수정 버튼
-/* $('.modify').on('click',function(){
+$('.modify').on('click',function(){
 	var formObj = $('#form');
 	
 	var nickname = $('.nickname_input').val();
-	var email = $('.mail_input').val();
 	var tel = $('.tel_input').val();
 	var zipcode = $('.zipcode').val();
 	var namujiAddress = $('#namujiAddress').val();
-	var inputCode = $(".mail_check_input").val();
 	
 	if(nickname == "" || !nickFormCheck(nickname)){
 		alert("닉네임을 재확인 해주세요.");
 		document.getElementById("nickname").focus();
 		return false;		
-	}else if(email == "" || !mailFormCheck(email)){
-		alert("이메일을 재확인 해주세요.");
-		document.getElementById("email").focus();
-		return false;		
-	}else if(inputCode == "" || inputCode != code){
-		alert("인증코드를 재확인 해주세요.");
-		document.getElementById("mail_check_input").focus();
-		return false;	
 	}else if(tel == "" || !telFormCheck(tel)){
 		alert("전화번호를 재확인 해주세요.");
 		document.getElementById("tel").focus();
@@ -302,7 +242,7 @@ $('.mail_check_input').blur(function(){
 
 	 
 	 formObj.submit();
-}) */
+})
 </script>
 <!-- 다음 주소 -->
 <script>

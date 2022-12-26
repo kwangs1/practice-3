@@ -200,4 +200,52 @@ public class MemberController {
 		
 		return "redirect:/member/info";
 	}
+	
+	//이메일 수정
+	@GetMapping("/EmailModify")
+	public void EmailModify() {
+		service.EmailModifyForm();
+	}
+	@PostMapping("/EmailModify")
+	public String EmailModify(MemberVO member,HttpServletRequest request) {
+		HttpSession http = request.getSession();
+		http.setAttribute("member", member);
+		
+		
+		service.EmailModify(member);
+		
+		return "redirect:/member/info";
+	}
+	
+	//id 찾기
+	@GetMapping("/idSearch")
+	public void idSearch() {
+		
+	}
+	@PostMapping("/idSearch")
+	@ResponseBody
+	public String idSearch(String nickname, String email, Model model) {	
+		log.info("nick..."+nickname);
+		log.info("email..."+email);
+		
+		String result = service.idSearch(nickname,email);
+		
+		return result;
+	}
+	
+	//pw 찾기
+	@GetMapping("/pwSearch")
+	public void pwSearch() {
+		
+	}
+	@PostMapping("/pwSearch")
+	@ResponseBody
+	public String pwSearch(String id, String email, Model model) {	
+		log.info("nick..."+id);
+		log.info("email..."+email);
+		
+		String result = service.pwSearch(id,email);
+		
+		return result;
+	}
 }

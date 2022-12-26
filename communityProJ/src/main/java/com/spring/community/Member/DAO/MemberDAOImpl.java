@@ -1,5 +1,6 @@
 package com.spring.community.Member.DAO;
 
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.apache.ibatis.session.SqlSession;
@@ -74,5 +75,29 @@ public class MemberDAOImpl implements MemberDAO{
 	@Override
 	public void modify(MemberVO member) {
 		session.update("mapper.member.modify",member);
+	}
+	
+	//이메일 수정
+	@Override
+	public void EmailModifyForm() {
+		session.selectOne("mapper.member.EmailModifyForm");
+	}
+	@Override
+	public void EmailModify(MemberVO member) {
+		session.update("mapper.member.EmailModify",member);
+	}
+	
+	//id 찾기
+	@Override
+	public String idSearch(Map<String, Object> data) {
+		log.info("dao..."+data);
+		return session.selectOne("mapper.member.idSearch",data);
+	}
+	
+	//pw 찾기
+	@Override
+	public String pwSearch(Map<String, Object> data) {
+		log.info("dao..."+data);
+		return session.selectOne("mapper.member.pwSearch",data);
 	}
 }

@@ -81,6 +81,7 @@
 </head>
 <body>
 <%@include file="../common/sidebar.jsp"%>
+<br><br>
 <form method="post" id="form">
 <input type="hidden" name="id" value="${member.id}">
 
