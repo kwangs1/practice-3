@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.community.Member.VO.MemberVO;
 import com.spring.community.common.Reply.DAO.ReplyDAO;
 import com.spring.community.common.Reply.VO.ReplyVO;
 

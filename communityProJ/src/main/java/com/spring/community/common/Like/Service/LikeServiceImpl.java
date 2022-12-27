@@ -16,28 +16,26 @@ public class LikeServiceImpl implements LikeService{
 	
 	@Autowired
 	private LikeDAO dao;
-	
+
+/* 게시글 좋아요,싫어요 */	
 	//좋아요 누르기
 	@Override
 	public void LikeUp(LikeVO like) {
-		log.info("LikeUp.....S..:"+ like);
+		log.info("좋아요 누름....." + like);
 		dao.LikeUp(like);
-	}
-	
+	}	
 	//좋아요 취소
 	@Override
 	public void LikeDown(LikeVO like) {
-		log.info("LikeDown.....S..:" + like);
-		dao.LikeDown(like);
-	}
-	
+		log.info("좋아요 취소....." + like);
+		dao.LikeDown(like);			
+	}	
 	//좋아요 확인
 	@Override
 	public int findLike(int bno) {
 		log.info("findLike...Check..."+bno);
 		return dao.findLike(bno);
-	}
-	
+	}	
 	//좋아요 갯수
 	@Override
 	public int getLike(int bno, int like_type) {
@@ -49,7 +47,25 @@ public class LikeServiceImpl implements LikeService{
 		return dao.getLike(map);
 	}
 
-
+	//싫어요 누르기
+	@Override
+	public void BadUp(LikeVO like) {
+		log.info("싫어요 누름....." + like);
+		dao.BadUp(like);
+	}
+	//싫어요 취소
+	@Override
+	public void BadDown(LikeVO like) {
+		log.info("싫어요 취소....." + like);
+		dao.BadDown(like);			
+	}
+	//싫어요 확인
+	@Override
+	public int findBad(int bno) {
+		log.info("findBad...Check..."+bno);
+		return dao.findBad(bno);
+	}
+	
 	
 
 }

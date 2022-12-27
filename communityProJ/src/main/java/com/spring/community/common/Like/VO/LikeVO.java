@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 public class LikeVO {
 	private int lno;
 	private int bno;
+	private String id;
 	private int like_type;
+	private int bad_type;
 	
 	public int getLno() {
 		return lno;
@@ -20,12 +22,26 @@ public class LikeVO {
 	public void setBno(int bno) {
 		this.bno = bno;
 	}
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public int getLike_type() {
 		return like_type;
 	}
 	public void setLike_type(int like_type) {
 		this.like_type = like_type;
 	}
+	public int getBad_type() {
+		return bad_type;
+	}
+	public void setBad_type(int bad_type) {
+		this.bad_type = bad_type;
+	}
+	
 	
 	
 }

@@ -82,9 +82,14 @@ public class BoardDAOImpl implements BoardDAO{
 	}
 	//게시글 목록 좋아요 갯수 
 	@Override
-	public void like_count(int bno) {
-		log.info("좋아요 갯수 카운트ㅡㅡ....");
-		 session.update("mapper.board.like_count",bno);
+	public void likeUp_count(int bno) {
+		log.info("dao...좋아요 갯수 카운트");
+		 session.update("mapper.board.likeUp_count",bno);
+	}
+	@Override
+	public void likeDown_count(int bno) {
+		log.info("dao...좋아요 갯수 카운트");
+		 session.update("mapper.board.likeDown_count",bno);
 	}
 
 }

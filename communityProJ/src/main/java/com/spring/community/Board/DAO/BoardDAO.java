@@ -32,6 +32,7 @@ public interface BoardDAO {
 	//´ñ±Û °¹¼ö
 	void reply_count(int bno);
 	//°Ô½Ã±Û ¸ñ·Ï ÁÁ¾Æ¿ä °¹¼ö
-	void like_count(int bno);
+	void likeUp_count(int bno);
+	void likeDown_count(int bno);
 
 }

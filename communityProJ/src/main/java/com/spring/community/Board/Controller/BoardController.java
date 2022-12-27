@@ -6,6 +6,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,6 +29,7 @@ import com.spring.community.common.SearchCriteria;
 import com.spring.community.common.Like.Service.LikeService;
 import com.spring.community.common.Like.VO.LikeVO;
 import com.spring.community.common.Reply.Service.ReplyService;
+import com.spring.community.common.Reply.VO.ReplyVO;
 
 @Controller
 @RequestMapping(value="/board/*")
@@ -53,10 +56,9 @@ public class BoardController{
 		model.addAttribute("pageMaker",pageMaker);
 		//ÀüÃ¼
 		model.addAttribute("lists",service.lists(scri));		
-		//´ñ±Û °¹¼ö
+		//´ñ±Û,ÁÁ¾Æ¿ä °¹¼ö
 		BoardVO board = new BoardVO();
 		service.reply_count(board.getBno());
-		service.like_count(board.getBno());
 	}
 	//°Ô½ÃÆÇ ¸ñ·Ï(ÀÚÀ¯)
 	@GetMapping("/free")
@@ -70,7 +72,7 @@ public class BoardController{
 		model.addAttribute("pageMaker",pageMaker);
 		//ÀÚÀ¯
 		model.addAttribute("free",service.free(scri));
-		//´ñ±Û °¹¼ö
+		//´ñ±Û,ÁÁ¾Æ¿ä °¹¼ö
 		BoardVO board = new BoardVO();
 		service.reply_count(board.getBno());
 
@@ -87,7 +89,7 @@ public class BoardController{
 		model.addAttribute("pageMaker",pageMaker);
 		//Áú¹®
 		model.addAttribute("qna",service.qna(scri));
-		//´ñ±Û °¹¼ö
+		//´ñ±Û,ÁÁ¾Æ¿ä °¹¼ö
 		BoardVO board = new BoardVO();
 		service.reply_count(board.getBno());
 
@@ -104,7 +106,7 @@ public class BoardController{
 		model.addAttribute("pageMaker",pageMaker);
 		//ÀÚ¶û
 		model.addAttribute("brag",service.brag(scri));
-		//´ñ±Û °¹¼ö
+		//´ñ±Û,ÁÁ¾Æ¿ä °¹¼ö
 		BoardVO board = new BoardVO();
 		service.reply_count(board.getBno());
 
@@ -121,7 +123,7 @@ public class BoardController{
 		model.addAttribute("pageMaker",pageMaker);
 		//°ø·«
 		model.addAttribute("tip",service.tip(scri));
-		//´ñ±Û °¹¼ö
+		//´ñ±Û,ÁÁ¾Æ¿ä °¹¼ö
 		BoardVO board = new BoardVO();
 		service.reply_count(board.getBno());
 
@@ -157,7 +159,8 @@ public class BoardController{
 	
 	//°Ô½ÃÆÇ »ó¼¼º¸±â
 	@GetMapping("/detail")
-	public void detail(int bno,Model model,@ModelAttribute("scri")SearchCriteria scri) {
+	public void detail(int bno,Model model,@ModelAttribute("scri")SearchCriteria scri
+			,HttpServletRequest request,@ModelAttribute("reply")ReplyVO reply) {
 		log.info("detail"+bno);
 		//»ó¼¼º¸±â
 		model.addAttribute("detail",service.detail(bno));
@@ -167,11 +170,16 @@ public class BoardController{
 		LikeVO like = new LikeVO();
 		like.setBno(bno);
 		like.setLike_type(1);
+		like.setBad_type(1);
 		
+		/* °Ô½Ã±Û ÁÁ¾Æ¿ä,½È¾î¿ä È®ÀÎ */
 		//ÁÁ¾Æ¿ä È®ÀÎ
 		model.addAttribute("findLike",likeService.findLike(bno));
 		//ÁÁ¾Æ¿ä °¹¼ö
 		model.addAttribute("getLike",likeService.getLike(bno,1));
+		//½È¾î¿ä È®ÀÎ
+		model.addAttribute("findBad",likeService.findBad(bno));
+		
 	}
 	//¼öÁ¤ ÆË¾÷Ã¢
 	@GetMapping("/getModifyReply")

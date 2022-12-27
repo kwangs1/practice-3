@@ -162,11 +162,18 @@
 </update>
 
 <!-- 좋아요 갯수-->
-<update id="like_count" parameterType="int">
+<update id="likeUp_count">
 	<![CDATA[
-		update board b
-		set b.like_count = (select count(lno) from heart where bno = #{bno})
-		where b.bno = #{bno}
+		update board
+		set like_count = like_count +1
+		where bno = #{bno}
+	]]>
+</update>
+<update id="likeDown_count">
+	<![CDATA[
+		update board
+		set like_count = like_count -1
+		where bno = #{bno}
 	]]>
 </update>
 </mapper>

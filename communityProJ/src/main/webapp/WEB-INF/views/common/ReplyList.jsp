@@ -70,11 +70,19 @@ a{
 		<h3>댓글</h3>	
 	<div>
 		<input type="hidden" name="bno" id="bno">
-		
+	<c:if test="${empty member }">	
 		<div>
 			<input type="text" name="nickname" id="nickname" placeholder="닉네임"/>
 			<input type="password" name="r_pw" id="r_pw" placeholder="비밀번호"/>
 		</div>
+	</c:if>
+	
+	<c:if test="${not empty member }">	
+		<div>
+			<input type="text" name="nickname" id="nickname" value="${member.nickname}" placeholder="닉네임"/>
+			<input type="password" name="r_pw" id="r_pw" placeholder="비밀번호"/>
+		</div>
+	</c:if>
 			<textarea name="content" id="content" placeholder="댓글을 입력해 주세요"></textarea>
 			<input type="button" class="btnReplyAdd" id="button" value="등 록"/>
 	</div>
@@ -110,6 +118,7 @@ function ReplyList(){
 				let credate = data[i].credate;
 				let r_depth = data[i].r_depth;
 				let r_group = data[i].r_group;
+				
 				
 				//댓글
 				if(r_depth == 0){
@@ -154,7 +163,9 @@ function ReplyList(){
 						htmls += '</div>';
 						htmls += '</div>';
 					}
-						//대댓글 입력란
+					
+					//대댓글 입력란, 로그인 안한 상태
+					if(nickname == null){
 		 				htmls += "<div class='collapse addRe_Reply' id='addRe_Reply"+ rno +"'>";
 						htmls += "<div>"
 						htmls += "<input type='text' id='nickname"+ rno +"' name='nickname' placeholder='닉네임'>";
@@ -165,6 +176,20 @@ function ReplyList(){
 						//동적으로 넣은 html 태그에서 발생하는 click 이벤트는 html 태그 안에서 onclick 처리하면 안되고 , jquery에서 클래스명 이나 id값을 받아서 처리하도록 해야함
 						htmls += "<button type='button' class='addRe_Reply' rno='" + rno +"' bno= '" + bno +"'>작 성</button>";
 						htmls += "</div>";
+					}else{
+						//로그인 한 상태
+		 				htmls += "<div class='collapse addRe_Reply' id='addRe_Reply"+ rno +"'>";
+						htmls += "<div>"
+						htmls += "<input type='text' id='nickname"+ rno +"' name='nickname' value='${member.nickname}' placeholder='닉네임'>";
+					  	htmls += "<input type ='password' id='r_pw"+ rno +"' name='r_pw' placeholder='비밀번호'>";
+						htmls += "</div>";
+						htmls += "<textarea name='content' id='content"+ rno +"' placeholder='댓글을 입력해 주세요'></textarea>"
+						//동적으로 넣은 html 태그에서 발생하는 이벤트는 동적으로 처리해줘야 함
+						//동적으로 넣은 html 태그에서 발생하는 click 이벤트는 html 태그 안에서 onclick 처리하면 안되고 , jquery에서 클래스명 이나 id값을 받아서 처리하도록 해야함
+						htmls += "<button type='button' class='addRe_Reply' rno='" + rno +"' bno= '" + bno +"'>작 성</button>";
+						htmls += "</div>";
+					}
+					
 					};//end for
 					
 						$("#replyList").html(htmls);

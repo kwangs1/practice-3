@@ -233,15 +233,9 @@ $(document).on('click','.id_search',function(){
 			if(data == 0){
 				$('.result').html('<strong>정보가 존재하지 않습니다.</strong>' 
 						+ '<br><br><button type="button" onClick="window.location.reload()">이전 화면으로</button>');
-				$('.id_input').val('');
-				$('.mail_input').val('');
-				$('.mail_check_input').val('');
 			}else{
 				$('.result').html('조회 결과 :<br> <strong>' + data +  '</strong>'
 						+ '<br><br><button type="button" onClick="login()">로그인 하기</button>');
-				$('.id_input').val('');
-				$('.mail_input').val('');
-				$('.mail_check_input').val('');
 			}
 		},
 		error : function(error){

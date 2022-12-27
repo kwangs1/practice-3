@@ -32,7 +32,9 @@ public interface BoardService {
 	//댓글 갯수
 	void reply_count(int bno);
 	//좋아요 갯수
-	void like_count(int bno);
+	void likeUp_count(int bno);
+	void likeDown_count(int bno);
+	
 	//이미지 파일 리스트
 	List<BoardAttachVO> getAttachList(int bno);
 	//이미지 삭제

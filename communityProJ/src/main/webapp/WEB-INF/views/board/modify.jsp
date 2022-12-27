@@ -93,8 +93,7 @@ select::-ms-expand {
         <tr>
           <td colspan="4" class="text-right">
           	<button type='submit' id="upd_chk" class="btn btn-xs btn-info">수정</button>
-			<a href='<c:url value='/board/lists?page=${cri.page}&perPageNum=${cri.perPageNum }&searchType=${scri.searchType}&keyword=${scri.keyword}'/>' 
-				class="btn btn-xs btn-success">목록으로</a>
+          	<input type='button' onClick="history.go(-1)" class="btn btn-xs btn-success" value="이전" />
           </td>
         </tr>
       </table>

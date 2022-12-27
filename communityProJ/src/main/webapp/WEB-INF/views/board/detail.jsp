@@ -27,6 +27,7 @@
   padding-right:15px;
   padding-bottom:10px;
   padding-left:15px;
+  color:black;
 }
 h1 {
 	text-align:center;
@@ -38,6 +39,12 @@ li{
  a:link {text-decoration: none;}
  a:visited {text-decoration: none;}
  a:hover { color: black; text-decoration: none;}
+ 
+.check{
+  position: absolute;
+  left:40%;
+}
+
 </style>
 <body>
 
@@ -76,14 +83,15 @@ li{
   			&nbsp;<button type="submit" data-oper='remove' class="btn btn-xs btn-warning remove" style="width:40px;height:23.5px;">삭제</button>
           </td>
         </tr>
-        <tr >
-        	<td class="getLike">
-				<a href="#" class="LikeBtn">
-        			<i class="fa-regular fa-heart"></i>
-				</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>${getLike}</strong>
-        	</td>
-        </tr>
-      </table>
+       </table>
+       
+       <div class="check">
+       		<button type="button" class="BadBtn" style="border:none; background-color:white; color:black;"></button>  
+       		<button type="button" class="LikeBtn" style="border:none; background-color:white; color:black;"></button>
+       </div>
+
+       
+        <br>
 		<%@include file="../common/ReplyList.jsp"%>
      </div>
    </div>
@@ -154,8 +162,10 @@ $(document).ready(function(){
   
 });
 </script>
-<!-- 좋아요 스크립트 -->
-<script type="text/javascript">
+
+<!-- 좋아요 -->
+<script>
+
 var LikeVal = ${findLike};
 
 	let bno = ${detail.bno};
@@ -163,20 +173,19 @@ var LikeVal = ${findLike};
 	
 	if(LikeVal > 0){
 		console.log("좋아요 눌렀어!.."+LikeVal);
-		
+		$('.LikeBtn').html('추천<br><i class="fa-solid fa-thumbs-up"></i>${getLike}');
 		$('.LikeBtn').on('click',function(){
-		$('.LikeBtn').html('<i class="fa-solid fa-heart"></i>');
+			
 			$.ajax({
 				type : 'post',
 				url : '${path}/Like/LikeDown',
-				contentType : 'application/json',
-				data : JSON.stringify({
+				data :{
 					'bno' : bno,
 					'like_type' : like_type
-				}),
-				dataType : 'json',
+				},
 				success : function(){
 					console.log("좋아요 취소!.."+LikeVal);
+					window.location.reload()
 				},
 				error : function(error){
 					console.log(error);
@@ -185,17 +194,67 @@ var LikeVal = ${findLike};
 		})//end function
  	}else{
 		console.log("좋아요 누를꺼임!.."+LikeVal);
+		$('.LikeBtn').html('추천<br><i class="fa-regular fa-thumbs-up"></i>${getLike}');
 		$('.LikeBtn').on('click',function(){
+			
 			$.ajax({
 				type : 'post',
 				url : '${path}/Like/LikeUp',
-				contentType : 'application/json',
-				data : JSON.stringify({
+				data : {
 					'bno' : bno,
 					'like_type' : like_type
-				}),
+				},
 				success : function(){
 					console.log("좋아요 눌렀어.."+LikeVal);
+					window.location.reload()
+				},
+				error : function(error){
+					console.log(error);
+				}
+			})//end ajax
+		})//end function
+	}
+	
+<!-- 싫어요 -->
+	var BadVal = ${findBad};
+	let bad_type = 1;
+	
+	if(BadVal > 0){
+		console.log("싫어요 눌렀어!.."+BadVal);
+		$('.BadBtn').html('비추<br><i class="fa-solid fa-thumbs-down"></i>');
+		$('.BadBtn').on('click',function(){
+			
+			$.ajax({
+				type : 'post',
+				url : '${path}/Like/BadDown',
+				data :{
+					'bno' : bno,
+					'bad_type' : bad_type
+				},
+				success : function(){
+					console.log("싫어요 취소!.."+BadVal);
+					window.location.reload()
+				},
+				error : function(error){
+					console.log(error);
+				}
+			})//end ajax;
+		})//end function
+ 	}else{
+		console.log("싫어요 누를꺼임!.."+BadVal);
+		$('.BadBtn').html('비추<br><i class="fa-regular fa-thumbs-down"></i>');
+		$('.BadBtn').on('click',function(){
+			
+			$.ajax({
+				type : 'post',
+				url : '${path}/Like/BadUp',
+				data : {
+					'bno' : bno,
+					'bad_type' : bad_type
+				},
+				success : function(){
+					console.log("싫어요 눌렀어.."+BadVal);
+					window.location.reload()
 				},
 				error : function(error){
 					console.log(error);
