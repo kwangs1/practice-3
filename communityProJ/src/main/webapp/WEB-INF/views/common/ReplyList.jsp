@@ -58,12 +58,22 @@ button{
 }
 .dropdown{
 	position : relative;
-	left : 300px;
-	top : -80px;
+	left : 600px;
+	top : -120px;
 }
 a{
 	color : black;
     font-family: 'Space Grotesk', sans-serif;
+}
+.ReplyLike{
+	border:none; 
+	background-color:white; 
+	color:black;
+}
+.ReplyBad{
+	border:none; 
+	background-color:white; 
+	color:black;
 }
 </style>
 <body>
@@ -86,7 +96,7 @@ a{
 			<textarea name="content" id="content" placeholder="댓글을 입력해 주세요"></textarea>
 			<input type="button" class="btnReplyAdd" id="button" value="등 록"/>
 	</div>
-		<div id="replyList"></div>				
+		<div id="replyList"></div>
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
@@ -118,18 +128,21 @@ function ReplyList(){
 				let credate = data[i].credate;
 				let r_depth = data[i].r_depth;
 				let r_group = data[i].r_group;
+				let reply_like = data[i].reply_like;
 				
 				
 				//댓글
 				if(r_depth == 0){
  					htmls += '<div id="rno' + rno + '">';
 					htmls += '<div class="user-info__img">';
+					htmls += '<button class="ReplyBad" rno="' + rno +'"><i class="fa-regular fa-thumbs-down"></i></button>';
+					htmls += '<button class="ReplyLike" rno="' + rno +'"><i class="fa-regular fa-thumbs-up"></i>'+reply_like+'</button>';
 					htmls += '<img src=${path}/resources/img/사용자.png>'		
-					htmls += nickname + '</div>'
+					htmls += nickname + '</div>';
 					htmls += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; 
 					htmls += content;
 					htmls += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; 
-					htmls += credate;
+					htmls += credate
 					//대댓글 버튼
 					htmls += " <a href='#' data-bs-toggle='collapse' data-bs-target='#addRe_Reply"+ rno +"' aria-expanded='false' aria-controls='collapseExample'>답 글</a>"; 
 					//수정 삭제 버튼
@@ -197,6 +210,15 @@ function ReplyList(){
 						//대댓글 작성 스크립트 실행문
 						$('.addRe_Reply').on('click',function(){				
 							addRe_Reply($(this).attr('bno'), $(this).attr('rno'));
+						});
+						
+						//댓글 좋아요
+		 				$('.ReplyLike').on('click',function(){			
+							ReplyLike($(this).attr('rno'));
+						});
+		 				//댓글 싫어요
+		 				$('.ReplyBad').on('click',function(){			
+		 					ReplyBad($(this).attr('rno'));
 						});
 			}//end success
 			,error : function(error){
@@ -334,6 +356,65 @@ var headers = {
 		}
 	});//end ajax			
 };//end function
+</script>
+
+<!-- 댓글 좋아요 -->
+<script>
+//좋아요
+ReplyLike = function(rno){
+	var like_type = 1;
+		
+					
+	$.ajax({
+			type : 'post',
+			url : '${path}/Like/ReplyLike',
+			data : {
+				'rno':rno ,
+				'like_type' : like_type},
+				
+			success : function(Likecheck){
+				if(Likecheck == 0){
+					ReplyList();
+					console.log('좋아요');
+				}
+				else if(Likecheck == 1){	
+					ReplyList();
+					console.log('좋아요 취소');
+				}
+			},
+			error : function(error){
+				console.log(error);
+			}
+		});//end ajax	
+	}//end function
+	
+//싫어요
+ReplyBad = function(rno){
+	var bad_type = 1;	
+						
+	$.ajax({
+		type : 'post',
+		url : '${path}/Like/ReplyBad',
+		data : {
+			'rno':rno ,
+			'bad_type' : bad_type},				
+				
+		success : function(Badcheck){
+			if(Badcheck == 0){
+				alert('싫어요 누름');
+				ReplyList();
+				console.log('싫어요');
+				}
+			else if(Badcheck == 1){	
+				ReplyList();
+				console.log('싫어요 취소');
+				}
+			},
+			error : function(error){
+				console.log(error);
+			}
+		});//end ajax	
+	}//end function
 </script>
 </body>
 </html>

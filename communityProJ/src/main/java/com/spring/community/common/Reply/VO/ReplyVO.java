@@ -17,8 +17,15 @@ public class ReplyVO {
 	private Date credate;
 	private int r_depth;
 	private int r_group;
+	private int reply_like;
 	
 	
+	public int getReply_like() {
+		return reply_like;
+	}
+	public void setReply_like(int reply_like) {
+		this.reply_like = reply_like;
+	}
 	public int getRno() {
 		return rno;
 	}

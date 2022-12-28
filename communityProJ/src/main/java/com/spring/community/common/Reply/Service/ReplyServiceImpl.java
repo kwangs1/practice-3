@@ -70,4 +70,18 @@ public class ReplyServiceImpl implements ReplyService{
 		log.info("대댓글 작성 진입S");
 		return dao.addRe_Reply(reply);
 	}
+	
+	//댓글에 달린 좋아요 갯수 업데이트
+	//추가
+	@Override
+	public int ReplyLikeUp(int rno) {
+		log.info("댓글 좋아요 번호.."+rno);
+		return dao.ReplyLikeUp(rno);
+	}
+	//삭제
+	@Override
+	public int ReplyLikeDown(int rno) {
+		log.info("댓글 좋아요 번호.."+rno);
+		return dao.ReplyLikeDown(rno);
+	}
 }

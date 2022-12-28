@@ -12,6 +12,7 @@
 		<typeAlias type="com.spring.community.common.BoardAttachVO" alias="BoardAttachVO" />		
 		<typeAlias type="com.spring.community.common.Reply.VO.ReplyVO" alias="ReplyVO" />		
 		<typeAlias type="com.spring.community.common.Like.VO.LikeVO" alias="LikeVO" />		
+		<typeAlias type="com.spring.community.common.Like.VO.ReplyLikeVO" alias="ReplyLikeVO" />		
 		
 </typeAliases>       
 </configuration>

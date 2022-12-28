@@ -28,8 +28,8 @@ import com.spring.community.common.PageMaker;
 import com.spring.community.common.SearchCriteria;
 import com.spring.community.common.Like.Service.LikeService;
 import com.spring.community.common.Like.VO.LikeVO;
+import com.spring.community.common.Like.VO.ReplyLikeVO;
 import com.spring.community.common.Reply.Service.ReplyService;
-import com.spring.community.common.Reply.VO.ReplyVO;
 
 @Controller
 @RequestMapping(value="/board/*")
@@ -160,7 +160,7 @@ public class BoardController{
 	//게시판 상세보기
 	@GetMapping("/detail")
 	public void detail(int bno,Model model,@ModelAttribute("scri")SearchCriteria scri
-			,HttpServletRequest request,@ModelAttribute("reply")ReplyVO reply) {
+			,HttpServletRequest request) {
 		log.info("detail"+bno);
 		//상세보기
 		model.addAttribute("detail",service.detail(bno));
@@ -170,7 +170,6 @@ public class BoardController{
 		LikeVO like = new LikeVO();
 		like.setBno(bno);
 		like.setLike_type(1);
-		like.setBad_type(1);
 		
 		/* 게시글 좋아요,싫어요 확인 */
 		//좋아요 확인

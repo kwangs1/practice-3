@@ -3,6 +3,7 @@ package com.spring.community.common.Like.DAO;
 import java.util.Map;
 
 import com.spring.community.common.Like.VO.LikeVO;
+import com.spring.community.common.Like.VO.ReplyLikeVO;
 
 public interface LikeDAO {
 /* 게시글 좋아요,싫어요 */
@@ -20,5 +21,19 @@ public interface LikeDAO {
 	void BadDown(LikeVO like);
 	//싫어요 확인
 	int findBad(int bno);
+
+/* 댓글 좋아요,싫어요 */
+	//좋아요 누르기
+	void ReplyLikeUp(ReplyLikeVO replyLike);
+	//좋아요 취소
+	void ReplyLikeDown(ReplyLikeVO replyLike);
+	//좋아요 확인
+	int findReLike(int rno);
+	//싫어요 누르기
+	void ReplyBadUp(ReplyLikeVO replyLike);
+	//싫어요 취소
+	void ReplyBadDown(ReplyLikeVO replyLike);
+	//싫어요 확인
+	int findReBad(int rno);
 
 }

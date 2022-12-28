@@ -172,7 +172,7 @@ var LikeVal = ${findLike};
 	let like_type = 1;
 	
 	if(LikeVal > 0){
-		console.log("좋아요 눌렀어!.."+LikeVal);
+		//console.log("좋아요 눌렀어!.."+LikeVal);
 		$('.LikeBtn').html('추천<br><i class="fa-solid fa-thumbs-up"></i>${getLike}');
 		$('.LikeBtn').on('click',function(){
 			
@@ -184,7 +184,7 @@ var LikeVal = ${findLike};
 					'like_type' : like_type
 				},
 				success : function(){
-					console.log("좋아요 취소!.."+LikeVal);
+					//console.log("좋아요 취소!.."+LikeVal);
 					window.location.reload()
 				},
 				error : function(error){
@@ -193,10 +193,9 @@ var LikeVal = ${findLike};
 			})//end ajax;
 		})//end function
  	}else{
-		console.log("좋아요 누를꺼임!.."+LikeVal);
+		//console.log("좋아요 누를꺼임!.."+LikeVal);
 		$('.LikeBtn').html('추천<br><i class="fa-regular fa-thumbs-up"></i>${getLike}');
 		$('.LikeBtn').on('click',function(){
-			
 			$.ajax({
 				type : 'post',
 				url : '${path}/Like/LikeUp',
@@ -204,11 +203,12 @@ var LikeVal = ${findLike};
 					'bno' : bno,
 					'like_type' : like_type
 				},
-				success : function(){
-					console.log("좋아요 눌렀어.."+LikeVal);
+				success : function(){		
+					//console.log("좋아요 눌렀어.."+LikeVal);
 					window.location.reload()
 				},
 				error : function(error){
+
 					console.log(error);
 				}
 			})//end ajax
@@ -220,7 +220,7 @@ var LikeVal = ${findLike};
 	let bad_type = 1;
 	
 	if(BadVal > 0){
-		console.log("싫어요 눌렀어!.."+BadVal);
+		//console.log("싫어요 눌렀어!.."+BadVal);
 		$('.BadBtn').html('비추<br><i class="fa-solid fa-thumbs-down"></i>');
 		$('.BadBtn').on('click',function(){
 			
@@ -232,7 +232,7 @@ var LikeVal = ${findLike};
 					'bad_type' : bad_type
 				},
 				success : function(){
-					console.log("싫어요 취소!.."+BadVal);
+					//console.log("싫어요 취소!.."+BadVal);
 					window.location.reload()
 				},
 				error : function(error){
@@ -241,7 +241,7 @@ var LikeVal = ${findLike};
 			})//end ajax;
 		})//end function
  	}else{
-		console.log("싫어요 누를꺼임!.."+BadVal);
+		//console.log("싫어요 누를꺼임!.."+BadVal);
 		$('.BadBtn').html('비추<br><i class="fa-regular fa-thumbs-down"></i>');
 		$('.BadBtn').on('click',function(){
 			
@@ -253,7 +253,7 @@ var LikeVal = ${findLike};
 					'bad_type' : bad_type
 				},
 				success : function(){
-					console.log("싫어요 눌렀어.."+BadVal);
+					//console.log("싫어요 눌렀어.."+BadVal);
 					window.location.reload()
 				},
 				error : function(error){

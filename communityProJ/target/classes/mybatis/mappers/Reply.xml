@@ -13,6 +13,7 @@
 		<result property="credate" column="credate" />
 		<result property="r_depth" column="r_depth" />
 		<result property="r_group" column="r_group" />
+		<result property="reply_like" column="reply_like" />
 	</resultMap>
 <!-- 댓글 목록 -->	
 <select id="ReplyList" resultType="ReplyVO">
@@ -28,7 +29,7 @@
 	<![CDATA[
 		insert into reply
 		values((select nvl(max(rno) +1,1) from reply), #{bno}, #{nickname},#{r_pw},
-			#{content},sysdate,#{r_depth},#{r_group} )
+			#{content},sysdate,#{r_depth},#{r_group},#{reply_like} )
 	]]>
 </insert>
 
@@ -86,8 +87,25 @@
 	<![CDATA[
 		insert into reply
 		values((select nvl(max(rno) +1,1) from reply), #{bno}, #{nickname},#{r_pw},
-			#{content},sysdate,#{r_depth},#{r_group} )
+			#{content},sysdate,#{r_depth},#{r_group},${reply_like} )
 	]]>
 </insert>
 
+<!-- 댓글에 달린 좋아요 갯수 추가 및 삭제 -->
+<!-- 추가  -->
+<update id="ReplyLikeUp">
+	<![CDATA[
+		update reply
+		set reply_like = reply_like +1
+		where rno = #{rno}
+	]]>
+</update>
+<!-- 삭제  -->
+<update id="ReplyLikeDown">
+	<![CDATA[
+		update reply
+		set reply_like = reply_like -1
+		where rno = #{rno}
+	]]>
+</update>
 </mapper>

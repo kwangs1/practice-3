@@ -5,13 +5,23 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mapper.Like">
+<!-- 게시글 좋아요,싫어요 관련 -->
 	<resultMap id="LikeResult" type="LikeVO">
-		<result property="lno" column="rno" />
+		<result property="lno" column="lno" />
 		<result property="bno" column="bno" />
 		<result property="like_type" column="like_type" />
 		<result property="bad_type" column="bad_type" />
 	</resultMap>
+	
+<!-- 댓글 좋아요,싫어요 관련 -->
+	<resultMap id="ReplyLikeResult" type="ReplyLikeVO">
+		<result property="hrno" column="hrno" />
+		<result property="rno" column="rno" />
+		<result property="like_type" column="like_type" />
+		<result property="bad_type" column="bad_type" />
+	</resultMap>
 
+<!-- 게시물 좋아요,싫어요 -->
 <!-- 좋아요 누르기 -->
 <insert id="LikeUp">
 	<![CDATA[
@@ -60,6 +70,51 @@
 	<![CDATA[
 		select count(*) from heart
 		where bno = #{bno} and bad_type  = 1
+	]]>
+</select>
+
+<!-- 댓글 좋아요,싫어요 -->
+<!-- 좋아요 누르기 -->
+<insert id="ReplyLikeUp">
+	<![CDATA[
+		insert into reply_heart
+		values((select nvl(max(hrno)+1,1)from reply_heart) , #{rno}, #{like_type} , #{bad_type} )
+	]]>
+</insert>
+<!-- 좋아요 취소 -->
+<delete id="ReplyLikeDown">
+	<![CDATA[
+		delete from reply_heart
+		where rno = #{rno} and like_type = #{like_type}
+	]]>
+</delete>
+<!-- 좋아요 확인 -->
+<select id="findReLike" resultType="int">
+	<![CDATA[
+		select count(rno) from reply_heart
+		where rno = #{rno} and like_type = 1
+	]]>
+</select>
+
+<!-- 싫어요 누르기 -->
+<insert id="ReplyBadUp">
+	<![CDATA[
+		insert into reply_heart
+		values((select nvl(max(hrno)+1,1)from reply_heart) , #{rno}, #{like_type} , #{bad_type} )
+	]]>
+</insert>
+<!-- 싫어요 취소 -->
+<delete id="ReplyBadDown">
+	<![CDATA[
+		delete from reply_heart
+		where rno = #{rno} and bad_type = #{bad_type}
+	]]>
+</delete>
+<!-- 싫어요 확인 -->
+<select id="findReBad" resultType="int">
+	<![CDATA[
+		select count(rno) from reply_heart
+		where rno = #{rno} and bad_type = 1
 	]]>
 </select>
 

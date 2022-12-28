@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.community.common.Like.DAO.LikeDAO;
 import com.spring.community.common.Like.VO.LikeVO;
+import com.spring.community.common.Like.VO.ReplyLikeVO;
 
 @Service
 public class LikeServiceImpl implements LikeService{
@@ -65,6 +66,39 @@ public class LikeServiceImpl implements LikeService{
 		log.info("findBad...Check..."+bno);
 		return dao.findBad(bno);
 	}
+
+/* 댓글 좋아요,싫어요 */
+	//좋아요 누르기
+	@Override
+	public void ReplyLikeUp(ReplyLikeVO replyLike) {
+		dao.ReplyLikeUp(replyLike);
+	}
+	//좋아요 취소
+	@Override
+	public void ReplyLikeDown(ReplyLikeVO replyLike) {
+		dao.ReplyLikeDown(replyLike);
+	}
+	//좋아요 확인
+	@Override
+	public int findReLike(int rno) {
+		return dao.findReLike(rno);
+	}	
+	
+	//싫어요 누르기
+	@Override
+	public void ReplyBadUp(ReplyLikeVO replyLike) {
+		dao.ReplyBadUp(replyLike);
+	}
+	//싫어요 취소
+	@Override
+	public void ReplyBadDown(ReplyLikeVO replyLike) {
+		dao.ReplyBadDown(replyLike);
+	}
+	//싫어요 확인
+	@Override
+	public int findReBad(int rno) {
+		return dao.findReBad(rno);
+	}	
 	
 	
 

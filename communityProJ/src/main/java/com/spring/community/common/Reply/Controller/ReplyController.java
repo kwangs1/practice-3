@@ -31,7 +31,7 @@ public class ReplyController {
 	public List<ReplyVO> ReplyList(int bno,Model model){
 		//´ñ±Û ¼ö
 		boardService.reply_count(bno);
-		
+
 		return service.ReplyList(bno);
 	}
 	

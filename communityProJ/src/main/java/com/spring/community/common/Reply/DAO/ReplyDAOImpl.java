@@ -65,5 +65,15 @@ public class ReplyDAOImpl implements ReplyDAO{
 	public int addRe_Reply(ReplyVO reply) {
 		return session.insert("mapper.reply.addRe_Reply",reply);
 	}
-
+	//댓글에 달린 좋아요 추가 및 삭제
+	//추가
+	@Override
+	public int ReplyLikeUp(int rno) {
+		return session.update("mapper.reply.ReplyLikeUp",rno);
+	}
+	//삭제
+	@Override
+	public int ReplyLikeDown(int rno) {
+		return session.update("mapper.reply.ReplyLikeDown",rno);
+	}
 }
