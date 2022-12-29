@@ -84,4 +84,16 @@ public class ReplyServiceImpl implements ReplyService{
 		log.info("댓글 좋아요 번호.."+rno);
 		return dao.ReplyLikeDown(rno);
 	}
+	
+	//댓글에 달린 싫어요 갯수 업데이트
+	//추가
+	@Override
+	public int ReplyBadUp(int rno) {
+		return dao.ReplyBadUp(rno);
+	}
+	//삭제
+	@Override
+	public int ReplyBadDown(int rno) {
+		return dao.ReplyBadDown(rno);
+	}
 }

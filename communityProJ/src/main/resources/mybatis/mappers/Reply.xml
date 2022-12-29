@@ -14,6 +14,7 @@
 		<result property="r_depth" column="r_depth" />
 		<result property="r_group" column="r_group" />
 		<result property="reply_like" column="reply_like" />
+		<result property="reply_bad" column="reply_bad" />
 	</resultMap>
 <!-- 댓글 목록 -->	
 <select id="ReplyList" resultType="ReplyVO">
@@ -29,7 +30,7 @@
 	<![CDATA[
 		insert into reply
 		values((select nvl(max(rno) +1,1) from reply), #{bno}, #{nickname},#{r_pw},
-			#{content},sysdate,#{r_depth},#{r_group},#{reply_like} )
+			#{content},sysdate,#{r_depth},#{r_group},#{reply_like},#{reply_bad} )
 	]]>
 </insert>
 
@@ -87,7 +88,7 @@
 	<![CDATA[
 		insert into reply
 		values((select nvl(max(rno) +1,1) from reply), #{bno}, #{nickname},#{r_pw},
-			#{content},sysdate,#{r_depth},#{r_group},${reply_like} )
+			#{content},sysdate,#{r_depth},#{r_group},#{reply_like} ,#{reply_bad})
 	]]>
 </insert>
 
@@ -105,6 +106,24 @@
 	<![CDATA[
 		update reply
 		set reply_like = reply_like -1
+		where rno = #{rno}
+	]]>
+</update>
+
+<!-- 댓글에 달린 싫어요 갯수 추가 및 삭제 -->
+<!-- 추가  -->
+<update id="ReplyBadUp">
+	<![CDATA[
+		update reply
+		set reply_bad = reply_bad +1
+		where rno = #{rno}
+	]]>
+</update>
+<!-- 삭제  -->
+<update id="ReplyBadDown">
+	<![CDATA[
+		update reply
+		set reply_bad = reply_bad -1
 		where rno = #{rno}
 	]]>
 </update>

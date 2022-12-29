@@ -86,7 +86,6 @@ a{
 			<input type="password" name="r_pw" id="r_pw" placeholder="비밀번호"/>
 		</div>
 	</c:if>
-	
 	<c:if test="${not empty member }">	
 		<div>
 			<input type="text" name="nickname" id="nickname" value="${member.nickname}" placeholder="닉네임"/>
@@ -95,7 +94,9 @@ a{
 	</c:if>
 			<textarea name="content" id="content" placeholder="댓글을 입력해 주세요"></textarea>
 			<input type="button" class="btnReplyAdd" id="button" value="등 록"/>
+			
 	</div>
+	
 		<div id="replyList"></div>
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -129,13 +130,14 @@ function ReplyList(){
 				let r_depth = data[i].r_depth;
 				let r_group = data[i].r_group;
 				let reply_like = data[i].reply_like;
+				let reply_bad = data[i].reply_bad;
 				
 				
 				//댓글
 				if(r_depth == 0){
  					htmls += '<div id="rno' + rno + '">';
 					htmls += '<div class="user-info__img">';
-					htmls += '<button class="ReplyBad" rno="' + rno +'"><i class="fa-regular fa-thumbs-down"></i></button>';
+					htmls += '<button id="badImg'+ rno +'" class="ReplyBad"  rno="' + rno +'"><i class="fa-regular fa-thumbs-down"></i>'+reply_bad+'</button>'
 					htmls += '<button class="ReplyLike" rno="' + rno +'"><i class="fa-regular fa-thumbs-up"></i>'+reply_like+'</button>';
 					htmls += '<img src=${path}/resources/img/사용자.png>'		
 					htmls += nickname + '</div>';
@@ -158,6 +160,8 @@ function ReplyList(){
 				}else{//대댓글
 						htmls += '<div id="rno' + rno + '">';
 						htmls += '<div class="user-info__img">';
+						htmls += '<button id="badImg" class="ReplyBad" rno="' + rno +'"><i class="fa-regular fa-thumbs-down"></i>'+reply_bad+'</button>';
+						htmls += '<button class="ReplyLike" rno="' + rno +'"><i class="fa-regular fa-thumbs-up"></i>'+reply_like+'</button>';
 						htmls += '⤷<img src=${path}/resources/img/사용자.png>'		
 						htmls += nickname + '</div>'
 						htmls += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; 
@@ -391,7 +395,7 @@ ReplyLike = function(rno){
 //싫어요
 ReplyBad = function(rno){
 	var bad_type = 1;	
-						
+	
 	$.ajax({
 		type : 'post',
 		url : '${path}/Like/ReplyBad',
@@ -400,20 +404,17 @@ ReplyBad = function(rno){
 			'bad_type' : bad_type},				
 				
 		success : function(Badcheck){
-			if(Badcheck == 0){
-				alert('싫어요 누름');
-				ReplyList();
-				console.log('싫어요');
+ 			if(Badcheck == 0){
+				ReplyList(); 
 				}
 			else if(Badcheck == 1){	
 				ReplyList();
-				console.log('싫어요 취소');
 				}
 			},
 			error : function(error){
 				console.log(error);
 			}
-		});//end ajax	
+		});//end ajax
 	}//end function
 </script>
 </body>

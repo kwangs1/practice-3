@@ -24,10 +24,17 @@ public interface ReplyDAO {
 	int Group_update(ReplyVO reply);
 	//대댓글 작성
 	int addRe_Reply(ReplyVO reply);
+
 	//댓글에 달린 좋아요 추가 및 삭제
 	//추가
 	int ReplyLikeUp(int rno);
 	//삭제
 	int ReplyLikeDown(int rno);
+	
+	//댓글에 달린 좋아요 추가 및 삭제
+	//추가
+	int ReplyBadUp(int rno);
+	//삭제
+	int ReplyBadDown(int rno);
 
 }

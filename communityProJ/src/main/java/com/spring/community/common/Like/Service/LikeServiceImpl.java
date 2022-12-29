@@ -66,6 +66,16 @@ public class LikeServiceImpl implements LikeService{
 		log.info("findBad...Check..."+bno);
 		return dao.findBad(bno);
 	}
+	//½È¾î¿ä °¹¼ö
+	@Override
+	public int getBad(int bno, int bad_type) {
+		log.info("getLike...check..."+bno+"\\\\"+bad_type);
+		Map<String,Object>map = new HashMap<>();
+		map.put("bno", bno);
+		map.put("bad_type", bad_type);
+		
+		return dao.getBad(map);
+	}
 
 /* ´ñ±Û ÁÁ¾Æ¿ä,½È¾î¿ä */
 	//ÁÁ¾Æ¿ä ´©¸£±â

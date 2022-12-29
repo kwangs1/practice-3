@@ -221,7 +221,7 @@ var LikeVal = ${findLike};
 	
 	if(BadVal > 0){
 		//console.log("싫어요 눌렀어!.."+BadVal);
-		$('.BadBtn').html('비추<br><i class="fa-solid fa-thumbs-down"></i>');
+		$('.BadBtn').html('비추<br><i class="fa-solid fa-thumbs-down"></i>${getBad}');
 		$('.BadBtn').on('click',function(){
 			
 			$.ajax({
@@ -242,7 +242,7 @@ var LikeVal = ${findLike};
 		})//end function
  	}else{
 		//console.log("싫어요 누를꺼임!.."+BadVal);
-		$('.BadBtn').html('비추<br><i class="fa-regular fa-thumbs-down"></i>');
+		$('.BadBtn').html('비추<br><i class="fa-regular fa-thumbs-down"></i>${getBad}');
 		$('.BadBtn').on('click',function(){
 			
 			$.ajax({

@@ -76,9 +76,11 @@ public class LikeController {
 		int Badcheck = service.findReBad(replyLike.getRno());
 		
 		if(Badcheck == 0) {
-			service.ReplyBadUp(replyLike);	
+			service.ReplyBadUp(replyLike);
+			replyService.ReplyBadUp(replyLike.getRno());
 		}else if(Badcheck == 1) {
-			service.ReplyBadDown(replyLike);	
+			service.ReplyBadDown(replyLike);
+			replyService.ReplyBadDown(replyLike.getRno());
 		}
 		
 		return Badcheck;

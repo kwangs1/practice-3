@@ -72,7 +72,13 @@
 		where bno = #{bno} and bad_type  = 1
 	]]>
 </select>
-
+<!-- 싫어요 갯수 -->
+<select id="getBad" resultType="int">
+	<![CDATA[
+		select count(*) from heart
+		where bno = #{bno} and bad_type = #{bad_type}
+	]]>
+</select>
 <!-- 댓글 좋아요,싫어요 -->
 <!-- 좋아요 누르기 -->
 <insert id="ReplyLikeUp">

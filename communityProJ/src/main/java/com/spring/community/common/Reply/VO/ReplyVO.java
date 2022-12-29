@@ -18,8 +18,15 @@ public class ReplyVO {
 	private int r_depth;
 	private int r_group;
 	private int reply_like;
+	private int reply_bad;
 	
 	
+	public int getReply_bad() {
+		return reply_bad;
+	}
+	public void setReply_bad(int reply_bad) {
+		this.reply_bad = reply_bad;
+	}
 	public int getReply_like() {
 		return reply_like;
 	}

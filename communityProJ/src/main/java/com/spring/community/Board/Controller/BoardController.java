@@ -170,6 +170,7 @@ public class BoardController{
 		LikeVO like = new LikeVO();
 		like.setBno(bno);
 		like.setLike_type(1);
+		like.setBad_type(1);
 		
 		/* 게시글 좋아요,싫어요 확인 */
 		//좋아요 확인
@@ -178,6 +179,8 @@ public class BoardController{
 		model.addAttribute("getLike",likeService.getLike(bno,1));
 		//싫어요 확인
 		model.addAttribute("findBad",likeService.findBad(bno));
+		//싫어요 갯수
+		model.addAttribute("getBad",likeService.getBad(bno,1));
 		
 	}
 	//수정 팝업창

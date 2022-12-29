@@ -56,6 +56,12 @@ public class LikeDAOImpl implements LikeDAO{
 		log.info("findBad....Check.."+bno);
 		return session.selectOne("mapper.Like.findBad",bno);
 	}
+	//½È¾î¿ä °¹¼ö
+	@Override
+	public int getBad(Map<String,Object> data) {
+		log.info("getLike...check..."+data);
+		return session.selectOne("mapper.Like.getBad",data);
+	}
 
 /* ´ñ±Û ÁÁ¾Æ¿ä,½È¾î¿ä */
 	//ÁÁ¾Æ¿ä ´©¸£±â
