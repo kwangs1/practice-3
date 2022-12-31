@@ -137,7 +137,7 @@ function ReplyList(){
 				if(r_depth == 0){
  					htmls += '<div id="rno' + rno + '">';
 					htmls += '<div class="user-info__img">';
-					htmls += '<button id="badImg'+ rno +'" class="ReplyBad"  rno="' + rno +'"><i class="fa-regular fa-thumbs-down"></i>'+reply_bad+'</button>'
+					htmls += '<button class="ReplyBad"  rno="' + rno +'"><i class="fa-regular fa-thumbs-down"></i>'+reply_bad+'</button>'
 					htmls += '<button class="ReplyLike" rno="' + rno +'"><i class="fa-regular fa-thumbs-up"></i>'+reply_like+'</button>';
 					htmls += '<img src=${path}/resources/img/사용자.png>'		
 					htmls += nickname + '</div>';

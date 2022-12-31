@@ -31,7 +31,8 @@ public class LikeController {
 	public void LikeUp(LikeVO like) {
 		log.info("LikeUp...C..:" + like);
 		boardService.likeUp_count(like.getBno());
-		service.LikeUp(like);
+		
+		service.LikeUp(like);			
 	}
 	//좋아요 취소
 	@PostMapping("/LikeDown")

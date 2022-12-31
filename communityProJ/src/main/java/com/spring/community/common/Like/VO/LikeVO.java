@@ -1,5 +1,7 @@
 package com.spring.community.common.Like.VO;
 
+import java.sql.Date;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -9,7 +11,16 @@ public class LikeVO {
 	private String id;
 	private int like_type;
 	private int bad_type;
+	private Date credate;
 	
+	
+	
+	public Date getCredate() {
+		return credate;
+	}
+	public void setCredate(Date credate) {
+		this.credate = credate;
+	}
 	public int getLno() {
 		return lno;
 	}

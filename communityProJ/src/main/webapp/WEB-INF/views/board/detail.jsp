@@ -44,7 +44,11 @@ li{
   position: absolute;
   left:40%;
 }
-
+.addScrap{
+	border:none; 
+	background-color:white; 
+	color:black;
+}
 </style>
 <body>
 
@@ -84,7 +88,8 @@ li{
           </td>
         </tr>
        </table>
-       
+       <button type="button" class="addScrap"><i class="fa-regular fa-star"></i>스크랩</button>
+       	
        <div class="check">
        		<button type="button" class="BadBtn" style="border:none; background-color:white; color:black;"></button>  
        		<button type="button" class="LikeBtn" style="border:none; background-color:white; color:black;"></button>
@@ -163,15 +168,21 @@ $(document).ready(function(){
 });
 </script>
 
-<!-- 좋아요 -->
+<!-- 게시글 좋아요,싫어요-->
 <script>
-
+/* 좋아요 */
 var LikeVal = ${findLike};
 
 	let bno = ${detail.bno};
 	let like_type = 1;
 	
-	if(LikeVal > 0){
+/* 	let today = new Date();
+	
+	let newDay = new Date(today);
+	let date = newDay.getDate()+1; */
+	
+  
+ 	if(LikeVal > 0){
 		//console.log("좋아요 눌렀어!.."+LikeVal);
 		$('.LikeBtn').html('추천<br><i class="fa-solid fa-thumbs-up"></i>${getLike}');
 		$('.LikeBtn').on('click',function(){
@@ -203,7 +214,7 @@ var LikeVal = ${findLike};
 					'bno' : bno,
 					'like_type' : like_type
 				},
-				success : function(){		
+				success : function(data){	
 					//console.log("좋아요 눌렀어.."+LikeVal);
 					window.location.reload()
 				},
@@ -213,9 +224,9 @@ var LikeVal = ${findLike};
 				}
 			})//end ajax
 		})//end function
-	}
+	} 
 	
-<!-- 싫어요 -->
+/* 싫어요 */
 	var BadVal = ${findBad};
 	let bad_type = 1;
 	
@@ -262,6 +273,36 @@ var LikeVal = ${findLike};
 			})//end ajax
 		})//end function
 	}
+</script>
+
+<!-- 스크랩 -->
+<script>
+$('.addScrap').click(function(){
+	var bno = ${detail.bno};
+	var id = '${member.id}';
+	
+	if(id == ""){
+		alert("로그인 후 이용 가능합니다.");
+		return false;
+	}
+	
+	$.ajax({
+		type : 'post',
+		url : '${path}/Scrap/addScrap',
+		data : {'bno' : bno},
+		success : function(data, textStatus){
+			if(data.trim() == 'success'){
+				alert("추가 되었습니다.");
+			
+			}else if(data.trim() == 'fail'){
+				alert("이미 찜 목록에 등록 되었습니다.");
+			}
+		},
+		error : function(error){
+			console.log(error);
+		}
+	})
+});
 </script>
 </body>
 </html>

@@ -35,6 +35,9 @@
     <li class="nav-item">
       <a class="nav-link" href="${path}/member/modify">정보 수정</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="${path}/Scrap/ScrapList">스크랩</a>
+    </li>
   </ul>
 </div>
 

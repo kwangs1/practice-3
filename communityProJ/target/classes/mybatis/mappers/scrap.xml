@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.scrap">
+
+	<resultMap id="ScrapResult" type="ScrapVO">
+		<result property="sno" column="sno" />
+		<result property="bno" column="bno" />
+		<result property="id" column="id" />
+	</resultMap>
+
+	<resultMap id="boardResult" type="boardVO">
+		<result property="bno" column="bno" />
+		<result property="title" column="title" />
+		<result property="nickname" column="nickname" />
+		<result property="credate" column="credate" />
+		<result property="content" column="content" />
+		<result property="pin" column="pin" />
+		<result property="category" column="category" />
+		<result property="hit" column="hit" />
+		<result property="reply_count" column="reply_count" />
+		<result property="like_count" column="like_count" />
+	</resultMap>
+<!-- 스크랩 리스트 -->
+<select id="ScrapList" resultType="ScrapVO">
+	<![CDATA[
+		select * from scrap
+		where id = #{id}
+		order by sno desc
+	]]>
+</select>
+
+<select id="boardList" resultType="boardVO" >
+	<![CDATA[
+		select  b.bno,b.title,s.bno from board b , scrap s
+		where b.bno = s.bno
+	]]>
+</select>
+<!-- 스크랩 추가 -->
+<insert id="addScrap" parameterType="ScrapVO">
+	<![CDATA[
+		insert into scrap
+		values((select nvl(max(sno)+1,1) from scrap), #{bno}, #{id} )
+	]]>
+</insert>
+<!-- 스크랩 삭제 -->
+<delete id="removeScrap" parameterType="int">
+	<![CDATA[
+		delete from scrap
+		where sno = #{sno}
+	]]>
+</delete>
+<!-- 스크랩 한 글인지 -->
+<select id="findScrap" parameterType="ScrapVO" resultType="String">
+	<![CDATA[
+		select decode(count(*), 0, 'false','true') from scrap
+		where bno = #{bno} and id = #{id}
+	]]>
+</select>
+</mapper>

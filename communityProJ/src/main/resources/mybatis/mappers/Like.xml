@@ -11,6 +11,7 @@
 		<result property="bno" column="bno" />
 		<result property="like_type" column="like_type" />
 		<result property="bad_type" column="bad_type" />
+		<result property="credate" column="credate" />
 	</resultMap>
 	
 <!-- 댓글 좋아요,싫어요 관련 -->
@@ -26,7 +27,7 @@
 <insert id="LikeUp">
 	<![CDATA[
 		insert into heart
-		values((select nvl(max(lno)+1,1)from heart), #{bno}, #{like_type}, #{bad_type} )
+		values((select nvl(max(lno)+1,1)from heart), #{bno}, #{like_type}, #{bad_type},sysdate )
 	]]>
 </insert>
 <!-- 좋아요 취소 -->
@@ -55,7 +56,7 @@
 <insert id="BadUp">
 	<![CDATA[
 		insert into heart
-		values((select nvl(max(lno)+1,1)from heart), #{bno}, #{like_type} , #{bad_type} )
+		values((select nvl(max(lno)+1,1)from heart), #{bno}, #{like_type} , #{bad_type},sysdate )
 	]]>
 </insert>
 <!-- 싫어요 취소 -->
