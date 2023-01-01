@@ -6,6 +6,7 @@ public class Criteria {
 	private int perPageNum;//한 페이지당 보여질 게시글 객수
 	private int rowStart;//게시글 시작행번호
 	private int rowEnd;//게시글 마지막행번호
+	private String id;
 
 
 	public Criteria() {
@@ -56,6 +57,15 @@ public class Criteria {
 
 	public void setRowEnd(int rowEnd) {
 		this.rowEnd = rowEnd;
+	}
+
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	

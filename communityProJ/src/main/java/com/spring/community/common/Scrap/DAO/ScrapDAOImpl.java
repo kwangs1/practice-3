@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.community.Board.VO.BoardVO;
+import com.spring.community.common.Criteria;
 import com.spring.community.common.Scrap.VO.ScrapVO;
 
 @Repository
@@ -25,8 +26,8 @@ public class ScrapDAOImpl implements ScrapDAO{
 	}
 	
 	@Override
-	public List<BoardVO>boardList(List<ScrapVO>ScrapList){
-		List<BoardVO>boardList = session.selectList("mapper.scrap.boardList",ScrapList);
+	public List<BoardVO>boardList(Criteria cri){
+		List<BoardVO>boardList = session.selectList("mapper.scrap.boardList",cri);
 		return boardList;
 	}
 
@@ -50,4 +51,10 @@ public class ScrapDAOImpl implements ScrapDAO{
 		session.delete("mapper.scrap.removeScrap",sno);
 	}
 	
+	//½ºÅ©·¦ µÈ °Ô½Ã±Û ÃÑ °³¼ö
+	@Override
+	public int getScrapTotal(String id) {
+		log.info("cri.getId(DAO)"+id);
+		return session.selectOne("mapper.scrap.getScrapTotal",id);
+	}
 }

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.community.Board.VO.BoardVO;
-import com.spring.community.common.Scrap.Controller.ScrapController;
+import com.spring.community.common.Criteria;
 import com.spring.community.common.Scrap.DAO.ScrapDAO;
 import com.spring.community.common.Scrap.VO.ScrapVO;
 
@@ -22,16 +22,15 @@ public class ScrapServiceImpl implements ScrapService{
 	
 	//스크랩 리스트
 	@Override
-	public Map<String,List> ScrapList(ScrapVO scrap){
+	public Map<String,List> ScrapList(ScrapVO scrap,Criteria cri){
 		Map<String,List> map = new HashMap<String,List>();
 		List<ScrapVO> ScrapList = dao.ScrapList(scrap);
-		
 		//만약 스크랩 된 게시글이 없을경우
 		if(ScrapList.size() == 0) {
 			return null;
 		}
 		//스크랩 한 게시물 정보 가져오기 위함.
-		List<BoardVO> boardList = dao.boardList(ScrapList);
+		List<BoardVO> boardList = dao.boardList(cri);
 		
 		//목록 정보를 map 담아 저장
 		map.put("ScrapList", ScrapList);
@@ -57,4 +56,12 @@ public class ScrapServiceImpl implements ScrapService{
 		log.info("삭제가 먹힘??."+sno);
 		dao.removeScrap(sno);
 	}
+	
+	//스크랩 된 게시글 총 개수
+	@Override
+	public int getScrapTotal(String id) {
+		log.info("cri.getId(Service)"+ id);
+		return dao.getScrapTotal(id);
+	}
+	
 }

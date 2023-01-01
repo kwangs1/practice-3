@@ -2,9 +2,12 @@ package com.spring.community.common;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import com.spring.community.Board.VO.BoardVO;
 
 //페이징 버튼을 계산하기 위한 클래스
 public class PageMaker {
@@ -98,6 +101,7 @@ public class PageMaker {
 		   
 		return uriComponents.toUriString();
 	}
+	
     
 	//쿼리문자열을 추가해서 원하는 uri생성할 수 있는 메서드
     public String makeSearch(int page) {

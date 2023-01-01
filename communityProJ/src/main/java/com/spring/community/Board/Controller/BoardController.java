@@ -28,7 +28,6 @@ import com.spring.community.common.PageMaker;
 import com.spring.community.common.SearchCriteria;
 import com.spring.community.common.Like.Service.LikeService;
 import com.spring.community.common.Like.VO.LikeVO;
-import com.spring.community.common.Like.VO.ReplyLikeVO;
 import com.spring.community.common.Reply.Service.ReplyService;
 
 @Controller
@@ -181,7 +180,6 @@ public class BoardController{
 		model.addAttribute("findBad",likeService.findBad(bno));
 		//½È¾î¿ä °¹¼ö
 		model.addAttribute("getBad",likeService.getBad(bno,1));
-		
 	}
 	//¼öÁ¤ ÆË¾÷Ã¢
 	@GetMapping("/getModifyReply")

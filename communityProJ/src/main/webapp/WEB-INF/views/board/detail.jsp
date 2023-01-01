@@ -46,8 +46,9 @@ li{
 }
 .addScrap{
 	border:none; 
-	background-color:white; 
-	color:black;
+	border-radius: 30px;
+	background-color:skyblue; 
+	color:white;
 }
 </style>
 <body>
@@ -88,7 +89,7 @@ li{
           </td>
         </tr>
        </table>
-       <button type="button" class="addScrap"><i class="fa-regular fa-star"></i>스크랩</button>
+       <button type="button" class="addScrap">스크랩</button>
        	
        <div class="check">
        		<button type="button" class="BadBtn" style="border:none; background-color:white; color:black;"></button>  
@@ -290,12 +291,12 @@ $('.addScrap').click(function(){
 		type : 'post',
 		url : '${path}/Scrap/addScrap',
 		data : {'bno' : bno},
-		success : function(data, textStatus){
+		success : function(data){
 			if(data.trim() == 'success'){
 				alert("추가 되었습니다.");
-			
+				changeOn()
 			}else if(data.trim() == 'fail'){
-				alert("이미 찜 목록에 등록 되었습니다.");
+				alert("이미 스크랩이 된 글입니다.");
 			}
 		},
 		error : function(error){

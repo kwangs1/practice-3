@@ -29,21 +29,26 @@
 	<![CDATA[
 		select * from scrap
 		where id = #{id}
-		order by sno desc
 	]]>
 </select>
 
 <select id="boardList" resultType="boardVO" >
 	<![CDATA[
-		select  b.bno,b.title,s.bno from board b , scrap s
-		where b.bno = s.bno
+	select b.bno, b.title, b.nickname, b.credate
+		from board b
+	left join(
+	    select s.sno, s.bno ,row_number() over(order by bno desc) as rnum
+	        from scrap s
+	        )s
+	    on b.bno = s.bno
+	where rnum between #{rowStart} and #{rowEnd}
 	]]>
 </select>
 <!-- 스크랩 추가 -->
 <insert id="addScrap" parameterType="ScrapVO">
 	<![CDATA[
 		insert into scrap
-		values((select nvl(max(sno)+1,1) from scrap), #{bno}, #{id} )
+		values((select nvl(max(sno)+1,1) from scrap), #{bno}, #{id})
 	]]>
 </insert>
 <!-- 스크랩 삭제 -->
@@ -58,6 +63,13 @@
 	<![CDATA[
 		select decode(count(*), 0, 'false','true') from scrap
 		where bno = #{bno} and id = #{id}
+	]]>
+</select>
+
+<select id="getScrapTotal" resultType="int">
+	<![CDATA[
+		select count(*) from scrap
+		where id = #{id}
 	]]>
 </select>
 </mapper>

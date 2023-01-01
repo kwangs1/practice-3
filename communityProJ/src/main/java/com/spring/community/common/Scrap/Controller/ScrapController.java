@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.community.Member.VO.MemberVO;
+import com.spring.community.common.Criteria;
+import com.spring.community.common.PageMaker;
 import com.spring.community.common.Scrap.Service.ScrapService;
 import com.spring.community.common.Scrap.VO.ScrapVO;
 
@@ -29,17 +31,26 @@ public class ScrapController {
 
 	//스크랩 리스트
 	@GetMapping("/ScrapList")
-	public void ScrapList(HttpServletRequest request,ScrapVO scrap) {
+	public void ScrapList(HttpServletRequest request,ScrapVO scrap,Criteria cri,Model model) {
 		HttpSession session = request.getSession();
 		
 		//id에 대한 정보 가져옴
 		MemberVO member = (MemberVO)session.getAttribute("member");
 		String id = member.getId();
 		scrap.setId(id);
+		cri.setId(id);
 		
 		//스크랩 한 게시글을 Map에 담음.
-		Map<String,List>map = service.ScrapList(scrap);
+		Map<String,List>map = service.ScrapList(scrap,cri);
 		session.setAttribute("scrap", map);
+		
+		//페이징 버튼을 위해 객체 선언(전체)
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);	
+		//총 게시글 갯수
+		pageMaker.setTotalCount(service.getScrapTotal(cri.getId()));
+		log.info("cri.getId()"+cri.getId());
+		model.addAttribute("pageMaker",pageMaker);
 	}
 	
 	//스크랩 추가 및 확인
